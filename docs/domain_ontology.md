@@ -1,6 +1,6 @@
-# Proposed final GraphRAG entity ontology
+# Shared final GraphRAG entity ontology
 
-**Status:** proposal for both the DIRTY and CLEAN arms. This document does not change the active GraphRAG settings or build an index. Both arms must receive the *same* final entity list and extraction prompt before either is indexed.
+**Status:** shared final ontology for both arms. This document records the domain rationale; it does not itself change workspace settings or create graph content. The shared entity list and both workspace settings currently match this ontology. Keep the entity list and extraction prompt identical across arms.
 
 ## Evidence and scope
 
@@ -100,6 +100,16 @@ Attach document/page provenance to every extracted entity and relation. Store nu
 3. **Deformation → Nb-bearing alloy/precipitate → recrystallization → grain size.** S discusses reductions and Nb-bearing low-pearlite steels ([S1](../data/source/stat3.pdf#page=1), [S4](../data/source/stat3.pdf#page=4)); T explicitly links Nb(C,N) precipitation to retarded recrystallization and fine α grains ([T2](../data/source/tanaka1981.pdf#page=2), [T9–12](../data/source/tanaka1981.pdf#page=9)). The precipitate-specific edge belongs to T unless S's page evidence identifies it.
 4. **Model → formula → measured outcome.** S's water-flow cooling model ([S9](../data/source/stat3.pdf#page=9)) and T's Hall–Petch yield-stress relation ([T17](../data/source/tanaka1981.pdf#page=17)) should be retrievable as different models, with equations checked against the PDFs.
 
-## Before the first paired index run
+## Configuration and index status
 
-The currently configured `configs/graphrag/entity_types.yaml` and both workspace settings still use the earlier list. After reviewing this proposal, update the shared entity file and regenerate **both** workspaces together, then rerun paired validation. Do not compare a graph built with the old list against one built with this proposal; ontology and prompts must remain identical across arms.
+`configs/graphrag/entity_types.yaml` and both generated workspace settings use this shared list. The DIRTY graph has been indexed with these entity types; the CLEAN workspace has not yet been indexed. When the ontology or extraction prompt changes, regenerate and validate both workspaces, then rebuild both graphs before comparing them.
+
+## Evaluation labels for the ontology
+
+Use the canonical concepts and Russian/English aliases above to curate
+`data/gold/entities.csv` and `data/gold/domain_terms.txt`. Store aliases as
+pipe-separated variants on the reviewed canonical entity/term row. Keep the
+cross-document traversal prompts above as candidates; enter only manually
+reviewed seeds and expected entities into `data/gold/traversal_queries.csv`.
+The evaluator's matching rules and score definitions are documented in
+[metrics.md](metrics.md). Do not treat this proposal itself as gold annotation.

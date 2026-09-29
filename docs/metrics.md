@@ -1,79 +1,135 @@
-# Graph evaluation and metrics
+# Graph and retrieval evaluation
 
-This document describes the repository's **current metric implementation** and the evaluation requested by `AGENTS.md` and `PROJECT_SPEC.md`. At present, there is no graph evaluation pipeline: `src/metallab/evaluation/__init__.py` is a placeholder, and `metallab evaluate --arm dirty`, `metallab evaluate --arm clean`, and `metallab compare` exit with an unimplemented error. The output files under `reports/` specified in `PROJECT_SPEC.md` are planned, not produced by these commands.
+The evaluator reads Microsoft GraphRAG `entities.parquet` and
+`relationships.parquet` from one arm, computes the requested graph and judged
+metrics, and writes JSON plus a GraphML snapshot. It does not start GraphRAG or
+call either model API.
 
-## What the code measures today
+```bash
+uv run python -m metallab evaluate --arm dirty
+uv run python -m metallab evaluate --arm clean
+uv run python -m metallab compare
+```
 
-`scripts/run_pair_index.py` runs the dirty and clean GraphRAG indexes in sequence after validating that their shared settings match. For each arm, it reads **Parquet metadata row counts** from the GraphRAG output directory:
+Each arm needs an indexed workspace at
+`data/<arm>/graphrag/output/`. The evaluator writes
+`reports/metrics_<arm>.json` and `reports/<arm>_graph.graphml`. Once both arm
+reports exist, `compare` writes `reports/comparison.csv`,
+`reports/graph_metrics.csv`, `reports/traversal_metrics.csv`, and
+`reports/final_report.md`. A missing GraphRAG artifact is an error. Gold-based
+metrics remain JSON `null` when their reviewed labels or queries are missing;
+missing labels are never treated as zero scores.
 
-| Report field | GraphRAG file | Meaning |
-| --- | --- | --- |
-| `chunk_count` | `text_units.parquet` | Number of output text-unit rows. |
-| `output_document_count` | `documents.parquet` | Number of output document rows. |
-| `entity_count` | `entities.parquet` | Number of entity rows. |
-| `relationship_count` | `relationships.parquet` | Number of relationship rows. |
+## Metric definitions
 
-The script writes these fields, run status, timestamps, input hashes, model names, settings and prompt hashes, and the GraphRAG exit code to `reports/run_dirty.json` and `reports/run_clean.json`. It writes indexing logs to `reports/index_dirty.log` and `reports/index_clean.log`. `output_count()` returns `null` in the JSON when a Parquet file is missing; a missing entity or relationship file causes the run to be marked failed. It checks only row counts, not the content or quality of graph records. These counts are **not yet** NetworkX node/edge counts: no code loads the rows, resolves duplicate entities, selects graph direction, or handles parallel relationships.
+### Entity and relation quality
 
-GraphRAG workspace settings enable GraphML and raw graph snapshots, but the repository does not currently analyze them. At inspection, this checkout contained dirty-arm Parquet outputs and `data/dirty/graphrag/output/graph.graphml`, but no clean-arm GraphRAG output files. `reports/run_dirty.json` said `running` and `reports/run_clean.json` said `pending`; both had null count fields. Those run reports are indexing state, not completed metric reports. The existence of the dirty graph does not mean its evaluation has run.
+Gold files are maintained by hand under `data/gold/`; no labels are generated
+from the graph. UTF-8 CSV headers are case-insensitive. Alias and list fields
+use `|` or `;` separators.
 
-## Planned evaluation inputs and comparison
+| File | Required fields | Optional fields | Meaning |
+| --- | --- | --- | --- |
+| `entities.csv` | One of `entity`, `canonical_entity`, `name`, or `title` | `aliases`, `is_noise` | Positive gold entities and known aliases. Rows marked `is_noise=true` are negative/noise labels. |
+| `relations.csv` | `source`, `target` | `relation` or `predicate` for human reference | Directed gold links. |
+| `coreference.csv` | `mention`, `canonical_entity` | — | Reviewed mention-to-cluster labels. |
+| `domain_terms.txt` | One concept per line | Add `|alias` variants on the same line | Reviewed domain concepts for coverage. |
+| `traversal_queries.csv` | `start_entity`, `target_entity` | `query_id`, `expected_entities`, `relevant_entities`, `noise_entities` | Seeds, expected reachable concepts, and reviewed noisy concepts. Lists are pipe- or semicolon-separated. |
 
-The project instructions call for loading each arm's `entities.parquet` and `relationships.parquet`, converting the results to NetworkX graphs, and comparing dirty with clean. Both source PDFs must contribute to one graph in each arm. The same entity types, prompts, models, chunking, extraction settings, and source PDFs must be used on both sides. The intended comparison is sensitive to preprocessing; changes in shared GraphRAG settings would invalidate it.
+Entity matching uses Unicode NFC, case folding, whitespace collapse, and explicit
+aliases from the gold file. It does not stem, translate, or infer synonyms.
 
-The following metric definitions are **proposed interpretations of the requirements**, not formulas implemented by the current repository. Before calculating them, the evaluator must define how GraphRAG entity IDs/names are canonicalized, how duplicate and parallel relationships are represented, whether edge direction is retained, and how source-document provenance is assigned. These choices affect almost every result below and must be identical for both arms.
+- **Entity Precision** = matched predicted entities / predicted entities.
+- **Entity Recall** = matched gold entities / positive gold entities.
+- **Relation Precision/Recall** use directed `(source, target)` pairs. GraphRAG
+  3.2's `relationships.parquet` has no predicate/type field, so the evaluator
+  cannot reliably score relation labels from its prose descriptions.
+- **Noise Ratio** = predicted entities not matched to a positive gold entity /
+  predicted entities. Treat this as a meaningful noise estimate only when the
+  gold entity list is complete for the corpus. Explicit `is_noise` rows are
+  counted as non-matches.
+- **Coreference Accuracy** is pairwise cluster accuracy over pairs of reviewed
+  mentions. Predicted clusters are inferred from GraphRAG `raw_entities` names
+  resolved against final entity names and the reviewed aliases. The report also
+  gives mention-resolution coverage and pair count.
+- **Domain Coverage** is the fraction of reviewed domain-term groups whose
+  canonical term or listed alias appears in a GraphRAG entity title or
+  description. It is literal phrase matching after NFC/casefold/whitespace
+  normalization.
 
-## Graph structure and importance
+Scores with no predicted or gold denominator are `null`, not 0. These are
+entity-level micro counts over the arm's graph.
 
-The requested structural metrics in `AGENTS.md` are:
+### Formula and table integrity
 
-| Metric | Intended question or usual definition |
+Formula integrity compares each formula block in saved MinerU
+`structured_content.json` with that document's prepared arm input after NFC,
+case folding, and whitespace normalization. For DIRTY, table integrity first
+checks the MinerU table block, then falls back to checking whether all substantive
+HTML cell contents appear in the input. For CLEAN, it checks the selected table output
+recorded by preprocessing (Camelot when accepted, otherwise the documented
+MinerU fallback) against the final input using the same normalized substring
+comparison. The JSON contains preserved/missing
+counts and document/page locations. A value of `null` means no structures of
+that kind were found. These metrics assess preservation into GraphRAG input;
+they do not claim GraphRAG extracted the structures as graph entities or
+relations.
+
+### Graph structure
+
+The graph is a simple undirected NetworkX view made from final entity titles and
+relationship endpoints. Duplicate and reverse relationships collapse into one
+edge for topology, while relation precision/recall remains directed. Any
+relationship endpoint missing from `entities.parquet` is included as a node and
+counted in `orphan_relationship_endpoints`.
+
+| Metric | Definition |
 | --- | --- |
-| Node and edge counts | How many distinct entities and graph links exist after the chosen canonicalization and edge policy? |
-| Density | What fraction of possible links exist? For a simple undirected graph, `2E / (V(V-1))` when `V > 1`. |
-| Connected components | How many disconnected groups are there, and how large is the largest? Usually computed on an undirected view. |
-| Isolated nodes | How many nodes have degree zero? |
-| Degree distribution; average, median, maximum degree | How many neighbors or incident edges does each node have? The treatment of parallel edges must be fixed. |
-| Bridges and articulation points | Which edges or nodes disconnect an undirected component when removed? |
-| Cycle basis | Which independent cycles are found under a specified undirected graph and traversal order? |
-| Cyclomatic number | Number of independent cycles; for an undirected graph, `E - V + C`, where `C` is the component count. |
-| Clustering coefficient | How often a node's neighbors are linked to one another? Specify whether the reported value is per-node or averaged. |
-| Average shortest path in largest connected component | Typical path length among nodes in that component. A singleton needs an explicit convention. |
-| Degree centrality, betweenness centrality, PageRank | Which entities are most connected, lie on many shortest paths, or rank highly by link structure? Direction, weights, normalization, and PageRank parameters must be fixed. |
+| Node Count | Unique nodes in the topology view, including orphan endpoints. |
+| Edge Count | Unique undirected edges after duplicate/reverse edges collapse. |
+| Connected Components | Number of connected components in that view. |
+| Largest Connected Component Ratio | Nodes in the largest component / all nodes; 0 for an empty graph. |
+| Isolated Nodes | Nodes with degree zero. |
+| Average Degree | Mean degree across all nodes, including isolates. |
+| Bridges | Edges whose removal increases the component count. |
+| Articulation Points | Nodes whose removal increases the component count. |
+| Cycle Basis Count | Number of cycles in NetworkX's cycle basis across the graph. |
+| Average Clustering | NetworkX mean local clustering coefficient. |
 
-NetworkX is the specified graph-analysis library. Raw graph size or density alone cannot establish extraction quality: extra noisy entities can increase counts and distort connectivity.
+Density is also reported as a diagnostic. All topology metrics are computed on
+the same undirected simple graph so arm-to-arm counts are comparable.
 
-## Gold-label and content metrics
+### Traversal and ranked neighborhood metrics
 
-The project expects manually maintained `data/gold/entities.csv`, `relations.csv`, `coreference.csv`, `domain_terms.txt`, and `traversal_queries.csv`. They are not present in this checkout. No labels should be invented to make a metric computable. The requested metrics are:
+Queries come from `traversal_queries.csv`. BFS depth 2 counts edges from the
+start node and excludes the start itself. BFS Recall@2 is the mean per-query
+fraction of all listed expected entities reached; expected entities absent from
+the graph remain in the denominator. BFS Noise Ratio@2 is noisy reached nodes /
+all reached nodes, averaged only where noise judgments exist through
+`noise_entities` or `entities.csv:is_noise`.
 
-| Metric | Data and decision needed |
-| --- | --- |
-| Entity precision and recall | Match predicted entities to reviewed gold entities. Precision is `TP / (TP + FP)`; recall is `TP / (TP + FN)`. Define aliases, entity types, and span/name matching first. |
-| Relation precision and recall | Match predicted source–relation–target triples to gold relations. Use one consistent policy for relation labels, direction, aliases, and duplicate triples. The same precision/recall formulas apply. |
-| Coreference accuracy | Compare extracted entity merges or mention-to-entity links with reviewed coreference labels. Define the unit of scoring and treatment of unmatched mentions. |
-| Noise ratio | Quantify predicted entities and/or relations judged irrelevant or incorrect by an explicit gold or review policy. The denominator and what qualifies as noise are not yet specified. |
-| Domain coverage | Check whether reviewed domain terms or concepts are represented in the graph. Define synonym matching and the denominator from `domain_terms.txt`. |
-| Formula and table integrity | Compare source MinerU/PDF structures with the prepared text and, if measuring graph preservation, with extracted graph evidence. Define exact-match versus semantic scoring and the expected structure set. |
-| Numeric-value and unit integrity | Requested by `PROJECT_SPEC.md`; compare original values/units with retained or graph-extracted evidence using reviewed matching rules. |
+Shortest Path Success Rate is the fraction of query rows with both endpoints
+specified for which the endpoints resolve and a path exists. Unresolved
+endpoints count as failures. Per-query results and path lengths are stored in
+the JSON report.
 
-The clean preprocessing report's `integrity: "passed"` is **not** a formula-integrity, table-integrity, or graph-quality score. It checks for nonempty output, restored protected structures, and preserved source numeric tokens. It does not evaluate GraphRAG extraction. When the gold files are absent, gold-dependent scores should remain unavailable rather than be reported as zero.
+Hit Rate@10, MRR, and NDCG@10 use deterministic graph-neighborhood rankings:
+reachable candidates within two hops sort by increasing BFS distance,
+decreasing degree, then normalized name. The relevance set is `expected_entities` (or `target_entity`
+when no expected list is supplied). NDCG uses binary relevance. These scores
+are retrieval proxies over graph neighborhoods, **not** Microsoft GraphRAG
+LLM/local-search results. A future GraphRAG query benchmark should provide its
+own ranked results and judgments.
 
-## Traversal, retrieval, and cross-document questions
+## Current checkout and limitations
 
-The requested traversal experiments are BFS to depths 1, 2, and 3; DFS; shortest path; and bidirectional shortest path. Queries should come from the manually maintained traversal file. For each query, the evaluator needs to record relevant and noisy nodes reached, expected entities reached, whether the expected path exists, and path length. Traversal order and depth conventions must be fixed so the two arms are comparable. `PROJECT_SPEC.md` also asks for runtime, but the project instructions prioritize semantic usefulness.
+The DIRTY arm has indexed GraphRAG artifacts, while the CLEAN GraphRAG output
+is absent. An existing `reports/metrics_dirty.json` is older than the current
+DIRTY Parquet artifacts; rerun `evaluate --arm dirty` before using its graph
+metrics. The gold directory currently has no reviewed labels or traversal
+queries, so the corresponding semantic, domain, and traversal scores are `null`.
+`evaluate --arm clean` requires indexing that arm first.
 
-Retrieval metrics `HitRate@10`, MRR, and `NDCG@10` require a ranked result list and judged relevant results per query. HitRate@10 asks whether at least one relevant result appears in the first ten; MRR uses the reciprocal rank of the first relevant result; NDCG@10 discounts relevance by rank and normally supports graded relevance. The repository has no retrieval evaluator or relevance judgments yet, so none of these can currently be calculated.
-
-Because both PDFs feed one graph per arm, the project also requests entities appearing in both documents, document-specific entities, cross-document edges and their ratio, and paths between concepts originating in different documents. This needs document provenance on entities and relationships or reliable links back to text units/documents. The evaluator must state how shared entities are assigned to documents and what counts as a cross-document edge. The current row-count script does none of this.
-
-## Current limitations and code map
-
-- `src/metallab/cli.py`: `evaluate` and `compare` are reserved commands that exit with code 2.
-- `src/metallab/evaluation/__init__.py`: placeholder; no evaluation functions.
-- `scripts/run_pair_index.py`: indexing and Parquet row-count reporting only.
-- `src/metallab/graph/workspace.py`: shared settings validation and GraphRAG input/output locations.
-- `AGENTS.md`: required metrics, traversal experiments, cross-document analysis, and gold-file names.
-- `PROJECT_SPEC.md`: additional preservation metrics and intended report filenames.
-
-Consequently, the current experiment can report how many rows GraphRAG wrote during indexing, but it cannot yet report graph topology, semantic extraction quality, traversal quality, retrieval effectiveness, or dirty-versus-clean metric deltas.
+There is no manual gold annotation in this repository yet. Create gold labels
+from document review before interpreting quality scores. Do not use generated
+entity descriptions as ground truth.

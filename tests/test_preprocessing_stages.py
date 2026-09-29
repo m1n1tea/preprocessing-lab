@@ -52,14 +52,14 @@ def test_pdf_line_break_hyphenation_is_conservative() -> None:
     assert repair_hyphenation("произво- дительность") == "производительность"
     assert repair_hyphenation("C-Mn and Nb-\nV") == "C-Mn and Nb-\nV"
     assert repair_hyphenation("non-recrystallization") == "non-recrystallization"
-    assert repair_hyphenation("non-\nrecrystallization") == "non-\nrecrystallization"
+    assert repair_hyphenation("non-\nrecrystallization") == "non-recrystallization"
     assert repair_hyphenation("Ni- content") == "Ni- content"
 
 
 def test_ocr_suspects_are_detection_only() -> None:
-    source = "rol1ed steel 8000С Fe3C"
+    source = "rol1ed steel 8000С Fe3C controlled rolling"
     assert detect_ocr_suspects(source) == ["rol1ed", "8000С", "Fe3C"]
-    assert source == "rol1ed steel 8000С Fe3C"
+    assert source == "rol1ed steel 8000С Fe3C controlled rolling"
 
 
 def test_ocr_requires_exact_approved_rule_and_context() -> None:
@@ -109,6 +109,13 @@ def test_number_unit_recognition_and_original_preservation() -> None:
     assert "16–20 мм [SI: 0.016–0.02 m]" in ranged
     assert "1250°C" in ranged
     assert "20 min [SI: 1200 s]" in ranged
+    seconds, changes = normalize_units("50с или 150 с")
+    assert seconds == "50с [SI: 50 s] или 150 с [SI: 150 s]"
+    assert len(changes) == 2
+    assert recognize_number_units("50с или 150 с") == ["50с", "150 с"]
+    zero_celsius, changes = normalize_units("0С")
+    assert zero_celsius == "0С"
+    assert changes == []
 
 
 def test_date_normalization_keeps_original_and_rejects_invalid() -> None:

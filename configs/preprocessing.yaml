@@ -1,8 +1,73 @@
-# Shared CLEAN preprocessing policy. Review OCR changes before adding them.
-repeated_furniture_min_pages: 2
-# Exact source/target pairs require a literal nearby context; no broad 0/O or 1/l rule.
-ocr_corrections: []
-# Expand a documented abbreviation at its first occurrence per document.
-abbreviations:
-  КП: контролируемая прокатка
-  УО: ускоренное охлаждение
+preprocessing:
+  unicode:
+    normalization: NFC
+  ftfy:
+    enabled: true
+  whitespace:
+    enabled: true
+  headers:
+    enabled: true
+    candidate_lines: 4
+    min_page_fraction: 0.6
+  page_numbers:
+    enabled: true
+  dehyphenation:
+    enabled: true
+    known_terms:
+      - recrystallization
+      - recrystallized
+      - recrystallize
+      - transformation
+      - temperature
+      - deformation
+      - microstructure
+      - precipitation
+      - austenite
+      - ferrite
+      - controlled
+      - cooling
+      - rolling
+      - strengthening
+      - steelmaking
+      - thermomechanical
+    preserve_prefixes:
+      - anti
+      - cross
+      - high
+      - inter
+      - intra
+      - long
+      - low
+      - medium
+      - multi
+      - non
+      - over
+      - post
+      - pre
+      - short
+      - under
+      - ultra
+      - well
+  ocr:
+    detect: true
+    auto_fix_high_confidence_only: true
+  units:
+    enabled: true
+    preserve_original: true
+    normalize_with_pint: true
+  tables:
+    enabled: true
+    extractor: camelot
+    flavor: lattice
+    minimum_accuracy: 70
+    maximum_whitespace: 40
+    fallback_to_mineru: true
+    empty_cell_ratio_limit: 0.5
+    fragmentation_ratio_limit: 0.35
+  formulas:
+    protect: true
+    sympy_validation: false
+  abbreviations:
+    КП: контролируемая прокатка
+    УО: ускоренное охлаждение
+  ocr_corrections: []

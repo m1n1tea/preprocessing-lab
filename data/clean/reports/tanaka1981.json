@@ -1,0 +1,907 @@
+{
+  "ambiguous_quantities": 0,
+  "block_count": 476,
+  "cleaned_character_count": 98579,
+  "control_characters_removed": 0,
+  "counts": {
+    "ambiguous_quantities": 0,
+    "control_codepoints_removed": 0,
+    "footer_removed": 28,
+    "formula_protected": 13,
+    "formula_restored": 13,
+    "header_removed": 27,
+    "integrity_validated": 1,
+    "number_unit_protected": 21,
+    "number_unit_restored": 21,
+    "number_units_detected": 21,
+    "number_units_recognized": 21,
+    "ocr_suspects": 13,
+    "page_number_removed": 28,
+    "pint_normalized_quantities": 21,
+    "repeated_header_footer_removed": 55,
+    "table_restored": 0,
+    "unit_normalization": 16,
+    "unresolved_ocr_warnings": 0
+  },
+  "dehyphenation_repairs": 0,
+  "document": "tanaka1981",
+  "footers_removed": 28,
+  "formula_validation_failures": 0,
+  "formulas": [
+    {
+      "canonical": null,
+      "document": "tanaka1981",
+      "formula_id": "tanaka1981-F001",
+      "latex": "d ^ { - 1 } \\propto \\sigma _ { \\mathrm { f l o w } } \\propto \\log Z \\quad . \\quad . \\quad . \\quad . \\quad .\\tag{1}",
+      "original": "d ^ { - 1 } \\propto \\sigma _ { \\mathrm { f l o w } } \\propto \\log Z \\quad . \\quad . \\quad . \\quad . \\quad .\\tag{1}",
+      "page": 5,
+      "sympy_valid": null,
+      "warning": "SymPy validation disabled by configuration"
+    },
+    {
+      "canonical": null,
+      "document": "tanaka1981",
+      "formula_id": "tanaka1981-F002",
+      "latex": "Z = \\xi \\exp \\left( Q _ { \\mathrm { d i f f } } / R T \\right) . \\ . \\ . \\ . \\ . \\ .\\tag{2}",
+      "original": "Z = \\xi \\exp \\left( Q _ { \\mathrm { d i f f } } / R T \\right) . \\ . \\ . \\ . \\ . \\ .\\tag{2}",
+      "page": 5,
+      "sympy_valid": null,
+      "warning": "SymPy validation disabled by configuration"
+    },
+    {
+      "canonical": null,
+      "document": "tanaka1981",
+      "formula_id": "tanaka1981-F003",
+      "latex": "d _ { \\mathrm { r e x } } = k \\epsilon ^ { - 0 . 5 } d _ { 0 } Z ^ { - 0 . 0 6 } \\quad . \\quad . \\quad . \\quad .\\tag{3}",
+      "original": "d _ { \\mathrm { r e x } } = k \\epsilon ^ { - 0 . 5 } d _ { 0 } Z ^ { - 0 . 0 6 } \\quad . \\quad . \\quad . \\quad .\\tag{3}",
+      "page": 6,
+      "sympy_valid": null,
+      "warning": "SymPy validation disabled by configuration"
+    },
+    {
+      "canonical": null,
+      "document": "tanaka1981",
+      "formula_id": "tanaka1981-F004",
+      "latex": "\\sigma _ { \\mathrm { ~ f ~ } } ^ { \\mathrm { L } } > \\sigma _ { \\mathrm { L } } \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot\\tag{5}",
+      "original": "\\sigma _ { \\mathrm { ~ f ~ } } ^ { \\mathrm { L } } > \\sigma _ { \\mathrm { L } } \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot\\tag{5}",
+      "page": 16,
+      "sympy_valid": null,
+      "warning": "SymPy validation disabled by configuration"
+    },
+    {
+      "canonical": null,
+      "document": "tanaka1981",
+      "formula_id": "tanaka1981-F005",
+      "latex": "\\sigma _ { \\mathbf { f } } ^ { \\mathtt { Z } } = \\sigma _ { \\mathtt { Z } } \\qquad . \\qquad . \\qquad . \\qquad . \\qquad . \\qquad . \\qquad .\\tag{6}",
+      "original": "\\sigma _ { \\mathbf { f } } ^ { \\mathtt { Z } } = \\sigma _ { \\mathtt { Z } } \\qquad . \\qquad . \\qquad . \\qquad . \\qquad . \\qquad . \\qquad .\\tag{6}",
+      "page": 16,
+      "sympy_valid": null,
+      "warning": "SymPy validation disabled by configuration"
+    },
+    {
+      "canonical": null,
+      "document": "tanaka1981",
+      "formula_id": "tanaka1981-F006",
+      "latex": "\\begin{array} { r } { \\sigma _ { \\mathrm { f } } ^ { \\mathrm { L } } - \\sigma _ { \\mathrm { f } } ^ { \\mathrm { Z } } \\geqslant \\sigma _ { \\mathrm { L } } - \\sigma _ { \\mathrm { Z } } = k ^ { \\prime } \\sigma _ { \\mathrm { y } } \\qquad \\mathrm { ~ . ~ } \\qquad \\mathrm { ~ . ~ } \\qquad . } \\end{array}\\tag{7}",
+      "original": "\\begin{array} { r } { \\sigma _ { \\mathrm { f } } ^ { \\mathrm { L } } - \\sigma _ { \\mathrm { f } } ^ { \\mathrm { Z } } \\geqslant \\sigma _ { \\mathrm { L } } - \\sigma _ { \\mathrm { Z } } = k ^ { \\prime } \\sigma _ { \\mathrm { y } } \\qquad \\mathrm { ~ . ~ } \\qquad \\mathrm { ~ . ~ } \\qquad . } \\end{array}\\tag{7}",
+      "page": 16,
+      "sympy_valid": null,
+      "warning": "SymPy validation disabled by configuration"
+    },
+    {
+      "canonical": null,
+      "document": "tanaka1981",
+      "formula_id": "tanaka1981-F007",
+      "latex": "\\begin{array} { r l } & { \\boldsymbol { \\sigma } _ { \\mathbf { y } } = \\boldsymbol { \\sigma } _ { \\mathbf { 0 } } + k _ { \\mathbf { y } } d ^ { - 1 / 2 } } \\\\ & { \\quad = ( \\boldsymbol { \\sigma } _ { \\mathbf { l h } } + \\boldsymbol { \\sigma } _ { \\mathbf { s h } } + \\boldsymbol { \\sigma } _ { \\mathbf { d h } } + \\boldsymbol { \\sigma } _ { \\mathbf { p h } } ) + k _ { \\mathbf { y } } d ^ { - 1 / 2 }   . } \\end{array}\\tag{8}",
+      "original": "\\begin{array} { r l } & { \\boldsymbol { \\sigma } _ { \\mathbf { y } } = \\boldsymbol { \\sigma } _ { \\mathbf { 0 } } + k _ { \\mathbf { y } } d ^ { - 1 / 2 } } \\\\ & { \\quad = ( \\boldsymbol { \\sigma } _ { \\mathbf { l h } } + \\boldsymbol { \\sigma } _ { \\mathbf { s h } } + \\boldsymbol { \\sigma } _ { \\mathbf { d h } } + \\boldsymbol { \\sigma } _ { \\mathbf { p h } } ) + k _ { \\mathbf { y } } d ^ { - 1 / 2 }   . } \\end{array}\\tag{8}",
+      "page": 17,
+      "sympy_valid": null,
+      "warning": "SymPy validation disabled by configuration"
+    },
+    {
+      "canonical": null,
+      "document": "tanaka1981",
+      "formula_id": "tanaka1981-F008",
+      "latex": "\\begin{array} { r l } { \\sigma _ { \\mathbf { y } } = \\sigma _ { \\mathbf { 0 } } + k _ { \\mathbf { y } } d ^ { - 1 / 2 } + \\sigma _ { \\mathrm { t e x t } } + \\sigma _ { \\mathrm { s u b } } \\mathrm { ~ . ~ } } & { { } \\mathrm { ~ . ~ } } \\end{array}\\tag{9}",
+      "original": "\\begin{array} { r l } { \\sigma _ { \\mathbf { y } } = \\sigma _ { \\mathbf { 0 } } + k _ { \\mathbf { y } } d ^ { - 1 / 2 } + \\sigma _ { \\mathrm { t e x t } } + \\sigma _ { \\mathrm { s u b } } \\mathrm { ~ . ~ } } & { { } \\mathrm { ~ . ~ } } \\end{array}\\tag{9}",
+      "page": 17,
+      "sympy_valid": null,
+      "warning": "SymPy validation disabled by configuration"
+    },
+    {
+      "canonical": null,
+      "document": "tanaka1981",
+      "formula_id": "tanaka1981-F009",
+      "latex": "\\boldsymbol { \\sigma } _ { \\mathbf { y } } = \\boldsymbol { \\sigma } _ { \\mathbf { 0 } } + k d _ { \\mathbf { e } } ^ { - 1 / 2 } \\quad \\mathrm { ~ . ~ } \\quad \\mathrm { ~ . ~ } \\quad \\mathrm { ~ . ~ } \\quad \\mathrm { ~ . ~ } \\quad \\mathrm { ~ . ~ }\\tag{10}",
+      "original": "\\boldsymbol { \\sigma } _ { \\mathbf { y } } = \\boldsymbol { \\sigma } _ { \\mathbf { 0 } } + k d _ { \\mathbf { e } } ^ { - 1 / 2 } \\quad \\mathrm { ~ . ~ } \\quad \\mathrm { ~ . ~ } \\quad \\mathrm { ~ . ~ } \\quad \\mathrm { ~ . ~ } \\quad \\mathrm { ~ . ~ }\\tag{10}",
+      "page": 17,
+      "sympy_valid": null,
+      "warning": "SymPy validation disabled by configuration"
+    },
+    {
+      "canonical": null,
+      "document": "tanaka1981",
+      "formula_id": "tanaka1981-F010",
+      "latex": "\\begin{aligned}\\sigma_{\\mathrm{y}} &= \\sigma_{0} + k_{\\mathrm{y}} d^{-1/2} \\left(1 - f_{\\mathrm{c}}\\right) \\\\& \\quad + k_{\\mathrm{c}} d_{\\mathrm{c}}^{-1/2} f_{\\mathrm{c}} \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot\\end{aligned}\\tag{11}",
+      "original": "\\begin{aligned}\\sigma_{\\mathrm{y}} &= \\sigma_{0} + k_{\\mathrm{y}} d^{-1/2} \\left(1 - f_{\\mathrm{c}}\\right) \\\\& \\quad + k_{\\mathrm{c}} d_{\\mathrm{c}}^{-1/2} f_{\\mathrm{c}} \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot\\end{aligned}\\tag{11}",
+      "page": 18,
+      "sympy_valid": null,
+      "warning": "SymPy validation disabled by configuration"
+    },
+    {
+      "canonical": null,
+      "document": "tanaka1981",
+      "formula_id": "tanaka1981-F011",
+      "latex": "T _ { \\mathrm { \\tiny ~ T S } } = A - B \\log d _ { \\mathrm { \\tiny ~ e ~ } } ^ { - 1 / 2 } \\quad \\mathrm { ~ . ~ . ~ . ~ . ~ . ~ . ~ . ~ }\\tag{12}",
+      "original": "T _ { \\mathrm { \\tiny ~ T S } } = A - B \\log d _ { \\mathrm { \\tiny ~ e ~ } } ^ { - 1 / 2 } \\quad \\mathrm { ~ . ~ . ~ . ~ . ~ . ~ . ~ . ~ }\\tag{12}",
+      "page": 18,
+      "sympy_valid": null,
+      "warning": "SymPy validation disabled by configuration"
+    },
+    {
+      "canonical": null,
+      "document": "tanaka1981",
+      "formula_id": "tanaka1981-F012",
+      "latex": "\\begin{aligned}T_{\\mathrm{TS}}(^{\\circ}\\mathrm{C}) = & -19 + 44(\\%\\mathrm{Si}) + 700(\\%\\mathrm{N}_{\\mathrm{free}})^{1/2} \\\\& + 0.26(\\sigma_{\\mathrm{D}} + \\Delta P + \\Delta) - 11.5d^{-1/2}\\end{aligned}\\tag{13}",
+      "original": "\\begin{aligned}T_{\\mathrm{TS}}(^{\\circ}\\mathrm{C}) = & -19 + 44(\\%\\mathrm{Si}) + 700(\\%\\mathrm{N}_{\\mathrm{free}})^{1/2} \\\\& + 0.26(\\sigma_{\\mathrm{D}} + \\Delta P + \\Delta) - 11.5d^{-1/2}\\end{aligned}\\tag{13}",
+      "page": 18,
+      "sympy_valid": null,
+      "warning": "SymPy validation disabled by configuration"
+    },
+    {
+      "canonical": null,
+      "document": "tanaka1981",
+      "formula_id": "tanaka1981-F013",
+      "latex": "\\begin{array} { r l } { T _ { \\mathrm { r S } } = \\Delta T + A ( \\sigma _ { \\mathrm { p h } } + \\sigma _ { \\mathrm { d h } } + \\Delta ) } & { { } } \\\\ { - B d ^ { - 1 / 2 } ( 1 - f _ { \\mathrm { S } } ) - C d _ { \\mathrm { e } } ^ { - 1 / 2 } f _ { \\mathrm { S } } - E n _ { \\mathrm { S } } } & { { } } \\end{array}\\tag{14}",
+      "original": "\\begin{array} { r l } { T _ { \\mathrm { r S } } = \\Delta T + A ( \\sigma _ { \\mathrm { p h } } + \\sigma _ { \\mathrm { d h } } + \\Delta ) } & { { } } \\\\ { - B d ^ { - 1 / 2 } ( 1 - f _ { \\mathrm { S } } ) - C d _ { \\mathrm { e } } ^ { - 1 / 2 } f _ { \\mathrm { S } } - E n _ { \\mathrm { S } } } & { { } } \\end{array}\\tag{14}",
+      "page": 18,
+      "sympy_valid": null,
+      "warning": "SymPy validation disabled by configuration"
+    }
+  ],
+  "formulas_protected": 13,
+  "formulas_validated_with_sympy": 0,
+  "ftfy_changes": 0,
+  "headers_removed": 27,
+  "input_path": "/home/mmakruov/experements/graphrag-preprocessing-lab/data/mineru/tanaka1981/structured_content.json",
+  "integrity": "passed",
+  "invalid_mineru_tables": 0,
+  "number_unit_expressions_detected": 21,
+  "ocr_automatic_repairs": 0,
+  "ocr_suspects": [
+    {
+      "automatic_repair": false,
+      "block": 3,
+      "category": "mixed_alphanumeric",
+      "disposition": "review",
+      "document": "tanaka1981",
+      "end": 78,
+      "page": 2,
+      "reason": "Check OCR digits and letters in a technical token",
+      "start": 73,
+      "text": "1960s"
+    },
+    {
+      "automatic_repair": false,
+      "block": 3,
+      "category": "mixed_alphanumeric",
+      "disposition": "review",
+      "document": "tanaka1981",
+      "end": 563,
+      "page": 2,
+      "reason": "Check OCR digits and letters in a technical token",
+      "start": 553,
+      "text": "steel19and"
+    },
+    {
+      "automatic_repair": false,
+      "block": 3,
+      "category": "mixed_alphanumeric",
+      "disposition": "review",
+      "document": "tanaka1981",
+      "end": 898,
+      "page": 2,
+      "reason": "Check OCR digits and letters in a technical token",
+      "start": 885,
+      "text": "Rothwell22who"
+    },
+    {
+      "automatic_repair": false,
+      "block": 4,
+      "category": "mixed_alphanumeric",
+      "disposition": "review",
+      "document": "tanaka1981",
+      "end": 652,
+      "page": 4,
+      "reason": "Check OCR digits and letters in a technical token",
+      "start": 642,
+      "text": "Maruyama4i"
+    },
+    {
+      "automatic_repair": false,
+      "block": 7,
+      "category": "mixed_alphanumeric",
+      "disposition": "review",
+      "document": "tanaka1981",
+      "end": 138,
+      "page": 4,
+      "reason": "Check OCR digits and letters in a technical token",
+      "start": 122,
+      "text": "Dulieu42obtained"
+    },
+    {
+      "automatic_repair": false,
+      "block": 12,
+      "category": "mixed_alphanumeric",
+      "disposition": "review",
+      "document": "tanaka1981",
+      "end": 679,
+      "page": 8,
+      "reason": "Check OCR digits and letters in a technical token",
+      "start": 660,
+      "text": "schedule22involving"
+    },
+    {
+      "automatic_repair": false,
+      "block": 3,
+      "category": "mixed_alphanumeric",
+      "disposition": "review",
+      "document": "tanaka1981",
+      "end": 495,
+      "page": 21,
+      "reason": "Check OCR digits and letters in a technical token",
+      "start": 490,
+      "text": "129or"
+    },
+    {
+      "automatic_repair": false,
+      "block": 4,
+      "category": "mixed_alphanumeric",
+      "disposition": "review",
+      "document": "tanaka1981",
+      "end": 69,
+      "page": 21,
+      "reason": "Check OCR digits and letters in a technical token",
+      "start": 52,
+      "text": "Rothwell22adopted"
+    },
+    {
+      "automatic_repair": false,
+      "block": 6,
+      "category": "mixed_alphanumeric",
+      "disposition": "review",
+      "document": "tanaka1981",
+      "end": 404,
+      "page": 23,
+      "reason": "Check OCR digits and letters in a technical token",
+      "start": 397,
+      "text": "141When"
+    },
+    {
+      "automatic_repair": false,
+      "block": 4,
+      "category": "mixed_alphanumeric",
+      "disposition": "review",
+      "document": "tanaka1981",
+      "end": 416,
+      "page": 24,
+      "reason": "Check OCR digits and letters in a technical token",
+      "start": 396,
+      "text": "Dennison78attributed"
+    },
+    {
+      "automatic_repair": false,
+      "block": 18,
+      "category": "mixed_alphanumeric",
+      "disposition": "review",
+      "document": "tanaka1981",
+      "end": 42,
+      "page": 25,
+      "reason": "Check OCR digits and letters in a technical token",
+      "start": 38,
+      "text": "114S"
+    },
+    {
+      "automatic_repair": false,
+      "block": 18,
+      "category": "mixed_alphanumeric",
+      "disposition": "review",
+      "document": "tanaka1981",
+      "end": 48,
+      "page": 25,
+      "reason": "Check OCR digits and letters in a technical token",
+      "start": 44,
+      "text": "116S"
+    },
+    {
+      "automatic_repair": false,
+      "block": 38,
+      "category": "mixed_alphanumeric",
+      "disposition": "review",
+      "document": "tanaka1981",
+      "end": 71,
+      "page": 26,
+      "reason": "Check OCR digits and letters in a technical token",
+      "start": 67,
+      "text": "282A"
+    }
+  ],
+  "original_character_count": 99662,
+  "output_path": "/home/mmakruov/experements/graphrag-preprocessing-lab/data/clean/input/tanaka1981.txt",
+  "page_count": 28,
+  "page_numbers_removed": 28,
+  "pint_normalized_quantities": 21,
+  "quantities": [
+    {
+      "ambiguous": false,
+      "block": 3,
+      "normalized": true,
+      "page": 2,
+      "raw": "0.1%",
+      "si_unit": "",
+      "si_value": "0.001",
+      "unit": "%",
+      "value": "0.1"
+    },
+    {
+      "ambiguous": false,
+      "block": 11,
+      "normalized": true,
+      "page": 2,
+      "raw": "900°C",
+      "si_unit": "K",
+      "si_value": "1173.15",
+      "unit": "°C",
+      "value": "900"
+    },
+    {
+      "ambiguous": false,
+      "block": 6,
+      "normalized": true,
+      "page": 6,
+      "raw": "850°C",
+      "si_unit": "K",
+      "si_value": "1123.15",
+      "unit": "°C",
+      "value": "850"
+    },
+    {
+      "ambiguous": false,
+      "block": 6,
+      "normalized": true,
+      "page": 7,
+      "raw": "950°C",
+      "si_unit": "K",
+      "si_value": "1223.15",
+      "unit": "°C",
+      "value": "950"
+    },
+    {
+      "ambiguous": false,
+      "block": 10,
+      "normalized": true,
+      "page": 10,
+      "raw": "1000°C",
+      "si_unit": "K",
+      "si_value": "1273.15",
+      "unit": "°C",
+      "value": "1000"
+    },
+    {
+      "ambiguous": false,
+      "block": 3,
+      "normalized": true,
+      "page": 11,
+      "raw": "70—80%",
+      "si_unit": "",
+      "si_value": "0.7–0.8",
+      "unit": "%",
+      "value": "70—80"
+    },
+    {
+      "ambiguous": false,
+      "block": 3,
+      "normalized": true,
+      "page": 11,
+      "raw": "10%",
+      "si_unit": "",
+      "si_value": "0.1",
+      "unit": "%",
+      "value": "10"
+    },
+    {
+      "ambiguous": false,
+      "block": 3,
+      "normalized": true,
+      "page": 12,
+      "raw": "70— 80%",
+      "si_unit": "",
+      "si_value": "0.7–0.8",
+      "unit": "%",
+      "value": "70— 80"
+    },
+    {
+      "ambiguous": false,
+      "block": 6,
+      "normalized": true,
+      "page": 12,
+      "raw": "60—70%",
+      "si_unit": "",
+      "si_value": "0.6–0.7",
+      "unit": "%",
+      "value": "60—70"
+    },
+    {
+      "ambiguous": false,
+      "block": 0,
+      "normalized": true,
+      "page": 13,
+      "raw": "0%",
+      "si_unit": "",
+      "si_value": "0",
+      "unit": "%",
+      "value": "0"
+    },
+    {
+      "ambiguous": false,
+      "block": 0,
+      "normalized": true,
+      "page": 13,
+      "raw": "30%",
+      "si_unit": "",
+      "si_value": "0.3",
+      "unit": "%",
+      "value": "30"
+    },
+    {
+      "ambiguous": false,
+      "block": 8,
+      "normalized": true,
+      "page": 15,
+      "raw": "100 K",
+      "si_unit": "K",
+      "si_value": "100",
+      "unit": "K",
+      "value": "100"
+    },
+    {
+      "ambiguous": false,
+      "block": 3,
+      "normalized": true,
+      "page": 16,
+      "raw": "100%",
+      "si_unit": "",
+      "si_value": "1",
+      "unit": "%",
+      "value": "100"
+    },
+    {
+      "ambiguous": false,
+      "block": 4,
+      "normalized": true,
+      "page": 17,
+      "raw": "100%",
+      "si_unit": "",
+      "si_value": "1",
+      "unit": "%",
+      "value": "100"
+    },
+    {
+      "ambiguous": false,
+      "block": 3,
+      "normalized": true,
+      "page": 20,
+      "raw": "0.1%",
+      "si_unit": "",
+      "si_value": "0.001",
+      "unit": "%",
+      "value": "0.1"
+    },
+    {
+      "ambiguous": false,
+      "block": 5,
+      "normalized": true,
+      "page": 20,
+      "raw": "0.3—0.5%",
+      "si_unit": "",
+      "si_value": "0.003–0.005",
+      "unit": "%",
+      "value": "0.3—0.5"
+    },
+    {
+      "ambiguous": false,
+      "block": 5,
+      "normalized": true,
+      "page": 20,
+      "raw": "0.3%",
+      "si_unit": "",
+      "si_value": "0.003",
+      "unit": "%",
+      "value": "0.3"
+    },
+    {
+      "ambiguous": false,
+      "block": 7,
+      "normalized": true,
+      "page": 21,
+      "raw": "50%",
+      "si_unit": "",
+      "si_value": "0.5",
+      "unit": "%",
+      "value": "50"
+    },
+    {
+      "ambiguous": false,
+      "block": 11,
+      "normalized": true,
+      "page": 21,
+      "raw": "0.06%",
+      "si_unit": "",
+      "si_value": "0.0006",
+      "unit": "%",
+      "value": "0.06"
+    },
+    {
+      "ambiguous": false,
+      "block": 8,
+      "normalized": true,
+      "page": 22,
+      "raw": "15%",
+      "si_unit": "",
+      "si_value": "0.15",
+      "unit": "%",
+      "value": "15"
+    },
+    {
+      "ambiguous": false,
+      "block": 3,
+      "normalized": true,
+      "page": 23,
+      "raw": "40 mm",
+      "si_unit": "m",
+      "si_value": "0.04",
+      "unit": "mm",
+      "value": "40"
+    }
+  ],
+  "removed_headers_footers": [
+    {
+      "block": 10,
+      "page": 1,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No. 4"
+    },
+    {
+      "block": 1,
+      "page": 2,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 13,
+      "page": 2,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No. 4"
+    },
+    {
+      "block": 0,
+      "page": 3,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 7,
+      "page": 3,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No.4"
+    },
+    {
+      "block": 1,
+      "page": 4,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 10,
+      "page": 4,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No.4"
+    },
+    {
+      "block": 0,
+      "page": 5,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 17,
+      "page": 5,
+      "role": "footer",
+      "text": "International Metals Reviews,1981 No.4"
+    },
+    {
+      "block": 1,
+      "page": 6,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 12,
+      "page": 6,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No. 4"
+    },
+    {
+      "block": 0,
+      "page": 7,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 8,
+      "page": 7,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No.4"
+    },
+    {
+      "block": 1,
+      "page": 8,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 16,
+      "page": 8,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No.4"
+    },
+    {
+      "block": 0,
+      "page": 9,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 9,
+      "page": 9,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No.4"
+    },
+    {
+      "block": 1,
+      "page": 10,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 11,
+      "page": 10,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No. 4"
+    },
+    {
+      "block": 0,
+      "page": 11,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 7,
+      "page": 11,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No.4"
+    },
+    {
+      "block": 1,
+      "page": 12,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 11,
+      "page": 12,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No. 4"
+    },
+    {
+      "block": 1,
+      "page": 13,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 15,
+      "page": 13,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No.4"
+    },
+    {
+      "block": 1,
+      "page": 14,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 8,
+      "page": 14,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No. 4"
+    },
+    {
+      "block": 0,
+      "page": 15,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 10,
+      "page": 15,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No. 4"
+    },
+    {
+      "block": 1,
+      "page": 16,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 13,
+      "page": 16,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No. 4"
+    },
+    {
+      "block": 0,
+      "page": 17,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 19,
+      "page": 17,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No.4"
+    },
+    {
+      "block": 1,
+      "page": 18,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 18,
+      "page": 18,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No. 4"
+    },
+    {
+      "block": 0,
+      "page": 19,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 10,
+      "page": 19,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No.4"
+    },
+    {
+      "block": 1,
+      "page": 20,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 10,
+      "page": 20,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No.4"
+    },
+    {
+      "block": 0,
+      "page": 21,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 12,
+      "page": 21,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No.4"
+    },
+    {
+      "block": 1,
+      "page": 22,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 11,
+      "page": 22,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No. 4"
+    },
+    {
+      "block": 0,
+      "page": 23,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 14,
+      "page": 23,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No.4"
+    },
+    {
+      "block": 1,
+      "page": 24,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 14,
+      "page": 24,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No.4"
+    },
+    {
+      "block": 0,
+      "page": 25,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 45,
+      "page": 25,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No.4"
+    },
+    {
+      "block": 1,
+      "page": 26,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 52,
+      "page": 26,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No. 4"
+    },
+    {
+      "block": 0,
+      "page": 27,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 51,
+      "page": 27,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No.4"
+    },
+    {
+      "block": 1,
+      "page": 28,
+      "role": "header",
+      "text": "Tanaka: Controlled rolling of steel"
+    },
+    {
+      "block": 14,
+      "page": 28,
+      "role": "footer",
+      "text": "International Metals Reviews, 1981 No.4"
+    }
+  ],
+  "source_format": "MinerU structured_content.json",
+  "tables": [],
+  "tables_from_camelot": 0,
+  "tables_from_mineru": 0,
+  "unicode_changes": 0,
+  "unresolved_ocr_warnings": 0,
+  "warnings": [],
+  "whitespace_repairs": 0
+}

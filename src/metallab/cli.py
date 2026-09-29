@@ -13,6 +13,7 @@ from pydantic import ValidationError
 
 from metallab.config import ExperimentConfig, load_experiment
 from metallab.corpus import DirtyCorpusError, build_dirty_corpus
+from metallab.evaluation import EvaluationError, compare_reports, evaluate_arm
 from metallab.extraction import ExtractionError, run_extraction, validate_extraction
 from metallab.graph import WorkspaceError, build_workspaces, validate_workspaces
 from metallab.logging_setup import configure_logging
@@ -243,12 +244,27 @@ def index(
 
 
 @app.command()
-def evaluate(arm: Annotated[Arm, typer.Option(help="Pipeline arm.")]) -> None:
-    """Reserve the graph evaluation stage."""
-    _reserved(f"evaluate {arm.value}")
+def evaluate(
+    arm: Annotated[Arm, typer.Option(help="Pipeline arm.")],
+    config: Annotated[Path, typer.Option(help="Experiment YAML file.")] = DEFAULT_CONFIG,
+) -> None:
+    """Calculate graph, semantic, traversal, retrieval, and integrity metrics."""
+    try:
+        evaluate_arm(arm.value, config)
+    except (OSError, ValueError, EvaluationError) as error:
+        logger.error("%s evaluation failed: %s", arm.value, error)
+        raise typer.Exit(code=1) from error
 
 
 @app.command()
-def compare() -> None:
-    """Reserve the paired comparison stage."""
-    _reserved("compare")
+def compare(
+    config: Annotated[Path, typer.Option(help="Experiment YAML file.")] = DEFAULT_CONFIG,
+) -> None:
+    """Compare previously evaluated dirty and clean workspaces."""
+    try:
+        paths = compare_reports(config)
+    except (OSError, ValueError, EvaluationError) as error:
+        logger.error("Metric comparison failed: %s", error)
+        raise typer.Exit(code=1) from error
+    for name, path in paths.items():
+        logger.info("Wrote %s: %s", name, path)

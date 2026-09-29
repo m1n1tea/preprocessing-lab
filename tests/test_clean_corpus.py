@@ -99,7 +99,10 @@ def test_clean_corpus_preserves_structures_and_writes_reports(
     assert report["integrity"] == "passed"
     audit = (tmp_path / "data/clean/audit/stat3.jsonl").read_text()
     assert "unit_normalization" in audit and "date_normalization" in audit
-    assert "repeated_header_footer_removed" in audit
+    assert any(
+        json.loads(line)["stage"] in {"header_removed", "footer_removed"}
+        for line in audit.splitlines()
+    )
     before = (stat3, tanaka, audit)
     build_clean_corpus(experiment, mineru, policy)
     assert before == (

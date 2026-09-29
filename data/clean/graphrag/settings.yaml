@@ -1,0 +1,112 @@
+completion_models:
+  default_completion_model:
+    model_provider: openai
+    model: ${GENERATION_MODEL}
+    auth_method: api_key
+    api_base: ${GENERATION_API_BASE_URL}
+    api_key: ${GENERATION_API_KEY}
+    retry:
+      type: exponential_backoff
+embedding_models:
+  default_embedding_model:
+    model_provider: openai
+    model: qwen3-embedding-4b
+    auth_method: api_key
+    api_base: http://127.0.0.1:8000/v1
+    api_key: ${EMBEDDING_API_KEY}
+    retry:
+      type: exponential_backoff
+input:
+  type: text
+  encoding: utf-8
+  file_pattern: (?:^|/)(?:stat3|tanaka1981)\.txt\Z
+chunking:
+  type: tokens
+  size: 800
+  overlap: 120
+  encoding_model: o200k_base
+input_storage:
+  type: file
+  base_dir: /home/mmakruov/experements/graphrag-preprocessing-lab/data/clean/input
+output_storage:
+  type: file
+  base_dir: /home/mmakruov/experements/graphrag-preprocessing-lab/data/clean/graphrag/output
+update_output_storage:
+  type: file
+  base_dir: /home/mmakruov/experements/graphrag-preprocessing-lab/data/clean/graphrag/update_output
+reporting:
+  type: file
+  base_dir: /home/mmakruov/experements/graphrag-preprocessing-lab/data/clean/graphrag/logs
+cache:
+  type: json
+  storage:
+    type: file
+    base_dir: /home/mmakruov/experements/graphrag-preprocessing-lab/data/clean/graphrag/cache
+vector_store:
+  type: lancedb
+  db_uri: /home/mmakruov/experements/graphrag-preprocessing-lab/data/clean/graphrag/output/lancedb
+  vector_size: 2560
+embed_text:
+  embedding_model_id: default_embedding_model
+extract_graph:
+  completion_model_id: default_completion_model
+  prompt: /home/mmakruov/experements/graphrag-preprocessing-lab/configs/graphrag/prompts/extract_graph.txt
+  entity_types:
+  - PROCESS
+  - PROCESS_ROUTE
+  - PROCESS_STAGE
+  - COOLING_METHOD
+  - EQUIPMENT
+  - STEEL_GRADE
+  - ALLOY_FAMILY
+  - PRODUCT_FORM
+  - CHEMICAL_ELEMENT
+  - PRECIPITATE
+  - PHASE
+  - MICROSTRUCTURE
+  - PROPERTY
+  - PROCESS_CONDITION
+  - MODEL
+  - FORMULA
+  max_gleanings: 1
+summarize_descriptions:
+  completion_model_id: default_completion_model
+  prompt: /home/mmakruov/experements/graphrag-preprocessing-lab/configs/graphrag/prompts/summarize_descriptions.txt
+  max_length: 500
+cluster_graph:
+  max_cluster_size: 10
+  use_lcc: false
+  seed: 42
+extract_claims:
+  enabled: false
+  completion_model_id: default_completion_model
+  prompt: /home/mmakruov/experements/graphrag-preprocessing-lab/configs/graphrag/prompts/extract_claims.txt
+  max_gleanings: 1
+community_reports:
+  completion_model_id: default_completion_model
+  graph_prompt: /home/mmakruov/experements/graphrag-preprocessing-lab/configs/graphrag/prompts/community_report_graph.txt
+  text_prompt: /home/mmakruov/experements/graphrag-preprocessing-lab/configs/graphrag/prompts/community_report_text.txt
+  max_length: 1000
+  max_input_length: 8000
+snapshots:
+  graphml: true
+  raw_graph: true
+  embeddings: false
+local_search:
+  completion_model_id: default_completion_model
+  embedding_model_id: default_embedding_model
+  prompt: /home/mmakruov/experements/graphrag-preprocessing-lab/configs/graphrag/prompts/local_search_system_prompt.txt
+global_search:
+  completion_model_id: default_completion_model
+  map_prompt: /home/mmakruov/experements/graphrag-preprocessing-lab/configs/graphrag/prompts/global_search_map_system_prompt.txt
+  reduce_prompt: /home/mmakruov/experements/graphrag-preprocessing-lab/configs/graphrag/prompts/global_search_reduce_system_prompt.txt
+  knowledge_prompt: /home/mmakruov/experements/graphrag-preprocessing-lab/configs/graphrag/prompts/global_search_knowledge_system_prompt.txt
+drift_search:
+  completion_model_id: default_completion_model
+  embedding_model_id: default_embedding_model
+  prompt: /home/mmakruov/experements/graphrag-preprocessing-lab/configs/graphrag/prompts/drift_search_system_prompt.txt
+  reduce_prompt: /home/mmakruov/experements/graphrag-preprocessing-lab/configs/graphrag/prompts/drift_reduce_prompt.txt
+basic_search:
+  completion_model_id: default_completion_model
+  embedding_model_id: default_embedding_model
+  prompt: /home/mmakruov/experements/graphrag-preprocessing-lab/configs/graphrag/prompts/basic_search_system_prompt.txt

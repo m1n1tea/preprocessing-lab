@@ -5,8 +5,9 @@ of two metallurgical PDFs with one graph built from cleaned extraction of those
 same PDFs. Both documents will contribute to one graph in each arm. MinerU,
 GraphRAG, models, prompts, and extraction settings must be shared between arms.
 
-PDF extraction and both corpus preparation stages are implemented. GraphRAG indexing
-and evaluation are not implemented yet.
+PDF extraction, both corpus preparation stages, paired GraphRAG workspace setup and
+validation, the standard-index command, and graph evaluation are implemented. The
+DIRTY arm currently has an indexed graph; the CLEAN arm has not been indexed yet.
 
 ## Setup on Ubuntu
 
@@ -76,7 +77,7 @@ UTF-8 checked and written deterministically. The stage does not remove headers,
 repair OCR or formulas, join hyphenated words, or normalize abbreviations,
 tables, or units. It logs each document's character and byte count and a total.
 Rerunning with unchanged inputs leaves identical output files in place. The
-two files will later be ingested together in one dirty GraphRAG workspace.
+the two files are ingested together in one dirty GraphRAG workspace.
 
 The current Tanaka Markdown omits final-page references 138-146 because MinerU
 classified them as headers; the dirty stage intentionally preserves that output
@@ -89,27 +90,44 @@ as-is. Their text remains in MinerU's structured JSON for later analysis.
 This validates both MinerU outputs and reads each `structured_content.json` rather
 than the Markdown. It writes `data/clean/input/stat3.txt` and
 `data/clean/input/tanaka1981.txt` for a future shared clean GraphRAG workspace.
-Every run also writes `data/clean/reports/<source>.json` with stage counts, OCR
-suspects, page/block references for protected formulas and tables, and final
-integrity status. `data/clean/audit/<source>.jsonl` records each actual text
-change with its original and resulting text and MinerU page/block index.
+Every run writes `data/clean/reports/<source>.json` and
+`data/clean/audit/<source>.jsonl`. The JSON report records stage counts, table
+and formula validation, quantities, OCR review candidates, and final integrity
+status. The JSONL audit records each actual text change with before/after text,
+rule, confidence, and MinerU page/block index. Human-readable reports are also
+written to `reports/preprocessing/<source>.md`.
 
-The pipeline protects formula and table blocks before cleaning prose and restores
-them exactly. It normalizes Unicode and whitespace, removes recurring
-headers/footers and page numbers, repairs conservative line-break hyphenation,
-identifies OCR suspects, annotates unambiguous SI unit conversions and full
-calendar dates, and expands configured abbreviations at first use. It checks
-that original numeric tokens and protected technical structures remain. Unique
-MinerU `header` blocks are retained; this includes Tanaka references 138–146
-that MinerU omitted from its Markdown.
+The layered pipeline normalizes Unicode and controls, detects repeated page-edge
+headers/footers, removes page numbers, repairs conservative PDF line-break
+hyphenation, and detects OCR review candidates. It protects formulas and inline
+values in prose; validated tables receive the relevant text cleanup before their
+serialized content is protected. Pint adds SI annotations while preserving source
+values and units. Unit interpretation uses local context: ambiguous prose
+quantities remain unchanged, while explicit table headings can provide units for
+numeric cells. Celsius quantities in prose are recorded without changing their
+text; Celsius table values with explicit headers receive Kelvin annotations.
+Context-sensitive aliases are normalized conservatively, and ambiguous symbols
+are not guessed. Valid dates get an ISO annotation, configured
+abbreviations expand at first use, and final checks preserve numeric tokens and
+protected formulas/tables.
+
+Camelot extracts validated tables using the configured parser settings. If its
+result does not meet the configured thresholds, the pipeline falls back to the
+MinerU table and records the reason. Unique MinerU `header` blocks remain,
+including structured content omitted from Markdown.
+
+`uv sync` installs required preprocessing dependencies, including Camelot,
+`ftfy`, `regex`, `pandas`, and `pint`. Optional SymPy formula validation is
+available with `uv sync --extra formulas` and remains disabled by default.
 
 `configs/preprocessing.yaml` holds the repeated-furniture threshold, the
 abbreviation dictionary, and reviewed OCR corrections. OCR corrections require
 an exact source token and nearby literal context. The default correction list
 is empty; suspects are reported without speculative replacements. Temperatures
-in Celsius are recognized but not converted to Kelvin without knowing whether
-they represent absolute values or differences. Output text and reports are
-deterministic for a fixed extraction and configuration.
+in Celsius are recorded without rewriting the prose. Explicit table headings
+provide context for Celsius-to-kelvin annotations. Source notation and values are
+retained alongside normalized forms. Output text and reports are deterministic
+for a fixed extraction and configuration.
 
 ## Configure paired GraphRAG workspaces
 
@@ -146,9 +164,14 @@ same remote generation service and local vLLM service for both arm runs.
 
     uv run metallab config-show
     uv run metallab evaluate --arm dirty
+    uv run metallab evaluate --arm clean
     uv run metallab compare
 
-Evaluation commands remain reserved and exit clearly as unimplemented. Keep
+Evaluation reads saved GraphRAG Parquet outputs and reviewed files under
+`data/gold/`; it does not call model APIs. It writes per-arm JSON and GraphML,
+then paired CSV and Markdown reports after both arms have been evaluated. See
+[docs/metrics.md](docs/metrics.md) for metric definitions and gold CSV schemas.
+Gold-dependent scores remain null until reviewed annotations exist. Keep
 credentials only in the ignored `.env` or exported environment variables.
 
 ## Checks

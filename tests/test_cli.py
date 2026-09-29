@@ -22,3 +22,11 @@ def test_clean_stage_runs_from_repository_configuration() -> None:
 
     assert result.exit_code == 0
     assert "Clean corpus complete: 2 documents" in result.output
+    import json
+
+    report = json.loads((ROOT / "reports/preprocessing/stat3.json").read_text())
+    table = report["tables"][0]
+    assert table["extractor"] == "Camelot"
+    assert table["valid"] is True
+    assert table["parser_flavor"] == "lattice"
+    assert table["row_count"] == 7

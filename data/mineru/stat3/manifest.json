@@ -1,0 +1,33 @@
+{
+  "source_id": "stat3",
+  "source_path": "data/source/stat3.pdf",
+  "source_sha256": "94d19ee0ed3482589e8780ef9de7e61227ca3bf677af3668cd54837b0d31154a",
+  "source_page_count": 10,
+  "mineru_version": "4.0.8",
+  "settings": {
+    "tier": "basic",
+    "ocr_mode": "auto",
+    "image_analysis": true,
+    "page_range": "all"
+  },
+  "statistics": {
+    "page_count": 10,
+    "markdown_characters": 22312,
+    "block_count": 103,
+    "table_blocks": 1,
+    "formula_blocks": 1,
+    "image_files": 6
+  },
+  "artifacts": [
+    "images/page_2_chart_4.jpg",
+    "images/page_2_chart_5.jpg",
+    "images/page_2_chart_6.jpg",
+    "images/page_7_table_2.jpg",
+    "images/page_8_chart_8.jpg",
+    "images/page_8_equation_2.jpg",
+    "markdown.md",
+    "middle_json.json",
+    "model_output.json",
+    "structured_content.json"
+  ]
+}
