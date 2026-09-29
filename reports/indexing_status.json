@@ -1,20 +1,34 @@
 {
-  "dirty": {
-    "command": "uv run python -m metallab index --arm dirty",
-    "completed": false,
-    "failed_workflow": "generate_text_embeddings",
-    "error_type": "ContextWindowExceededError",
-    "cause": "The local embedding endpoint has a 2048-token context limit and rejected one input of at least 2049 tokens.",
-    "graph_artifacts_written": ["entities.parquet", "relationships.parquet", "communities.parquet", "community_reports.parquet", "graph.graphml"],
-    "shared_configuration_changed": false
+  "latest_run": {
+    "embedding_server_test": {
+      "status": "passed",
+      "prompt_tokens": 5602,
+      "dimensions": 2560
+    },
+    "dirty": {
+      "command": "uv run python -m metallab index --arm dirty",
+      "completed": true,
+      "failed_workflow": null
+    },
+    "clean": {
+      "command": "uv run python -m metallab index --arm clean",
+      "completed": true,
+      "failed_workflow": null
+    },
+    "shared_configuration_changed": false,
+    "evaluation_reports": [
+      "reports/metrics_dirty.json",
+      "reports/metrics_clean.json",
+      "reports/comparison.csv",
+      "reports/graph_metrics.csv",
+      "reports/traversal_metrics.csv",
+      "reports/final_report.md"
+    ]
   },
-  "clean": {
-    "command": "uv run python -m metallab index --arm clean",
-    "completed": false,
-    "failed_workflow": "generate_text_embeddings",
-    "error_type": "ContextWindowExceededError",
-    "cause": "The local embedding endpoint has a 2048-token context limit and rejected one input of at least 2049 tokens.",
-    "graph_artifacts_written": ["entities.parquet", "relationships.parquet", "communities.parquet", "community_reports.parquet", "graph.graphml"],
-    "shared_configuration_changed": false
+  "previous_attempt": {
+    "dirty_completed": false,
+    "clean_completed": false,
+    "failure": "The local embedding endpoint was capped at 2048 tokens and rejected an input of at least 2049 tokens.",
+    "resolution": "Restarted the embedding server with a longer context; the rerun passed a 5602-token embedding test and both indexes completed."
   }
 }

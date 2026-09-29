@@ -41,6 +41,4 @@ Metrics come from the per-arm JSON reports. Null values indicate unavailable gol
 
 ## Indexing status
 
-Both standard indexing runs produced entities, relationships, communities, and GraphML, then exited with an error during `generate_text_embeddings`. The local embedding endpoint rejected an individual input of at least 2,049 tokens because its configured context limit is 2,048 tokens. The same error occurred for DIRTY and CLEAN; no experimental settings were changed between runs. The graph topology metrics above were calculated from the generated entity and relationship Parquet artifacts. Embedding-dependent GraphRAG search was not run.
-
-Gold entity, relation, coreference, domain-term, and traversal-query files are absent, so their quality metrics are unavailable. Formula and table integrity compare preserved structures in the input corpora; they do not measure graph extraction quality.
+The latest DIRTY and CLEAN GraphRAG indexing runs both completed, including `generate_text_embeddings`. The local embedding endpoint passed a 5,602-token test before indexing. Shared GraphRAG settings were unchanged between arms. See `reports/indexing_status.json` for run status.

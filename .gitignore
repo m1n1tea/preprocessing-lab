@@ -12,6 +12,6 @@ htmlcov/
 dist/
 build/
 
-# Keep source PDFs and manually curated gold files under version control.
-reports/*
-!reports/.gitkeep
+lancedb/
+cache/
+logs/
