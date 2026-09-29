@@ -1,0 +1,4 @@
+# Shared local vLLM embedding service; model name must match /v1/models.
+model: qwen3-embedding-4b
+api_base: http://127.0.0.1:8000/v1
+dimensions: 2560

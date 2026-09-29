@@ -1,0 +1,8 @@
+# Shared CLEAN preprocessing policy. Review OCR changes before adding them.
+repeated_furniture_min_pages: 2
+# Exact source/target pairs require a literal nearby context; no broad 0/O or 1/l rule.
+ocr_corrections: []
+# Expand a documented abbreviation at its first occurrence per document.
+abbreviations:
+  КП: контролируемая прокатка
+  УО: ускоренное охлаждение

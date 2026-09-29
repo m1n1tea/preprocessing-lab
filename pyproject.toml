@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "metallab"
+version = "0.1.0"
+description = "Reproducible dirty-versus-clean GraphRAG experiment for metallurgical PDFs"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "graphrag==3.2.0",
+  "mineru==4.0.8",
+  "pydantic>=2.8,<3",
+  "pypdf>=6,<7",
+  "python-dotenv>=1.2,<2",
+  "PyYAML>=6,<7",
+  "typer>=0.12,<1",
+]
+
+[project.scripts]
+metallab = "metallab.cli:app"
+
+[dependency-groups]
+dev = [
+  "pytest>=8,<10",
+  "ruff>=0.8,<1",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/metallab"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

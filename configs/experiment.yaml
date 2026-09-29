@@ -1,0 +1,16 @@
+name: controlled_rolling_dirty_vs_clean
+seed: 42
+sources:
+  - id: stat3
+    path: data/source/stat3.pdf
+  - id: tanaka1981
+    path: data/source/tanaka1981.pdf
+chunking:
+  size: 800
+  overlap: 120
+paths:
+  mineru: data/mineru
+  dirty: data/dirty
+  clean: data/clean
+  gold: data/gold
+  reports: reports

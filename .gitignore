@@ -1,0 +1,23 @@
+.venv/
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
+
+# Keep source PDFs and manually curated gold files under version control.
+data/mineru/*
+!data/mineru/.gitkeep
+data/dirty/*
+!data/dirty/.gitkeep
+data/clean/*
+!data/clean/.gitkeep
+reports/*
+!reports/.gitkeep

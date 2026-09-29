@@ -1,0 +1,5 @@
+# One shared MinerU configuration for both source PDFs.
+tier: basic
+ocr_mode: auto
+image_analysis: true
+page_range: all

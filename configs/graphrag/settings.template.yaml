@@ -1,0 +1,98 @@
+# GraphRAG 3.2.0 shared settings. The workspace builder fills paths and values
+# from configs/experiment.yaml and configs/embeddings/vllm.yaml.
+completion_models:
+  default_completion_model:
+    model_provider: openai
+    model: ${GENERATION_MODEL}
+    auth_method: api_key
+    api_base: ${GENERATION_API_BASE_URL}
+    api_key: ${GENERATION_API_KEY}
+    retry:
+      type: exponential_backoff
+embedding_models:
+  default_embedding_model:
+    model_provider: openai
+    model: __EMBEDDING_MODEL__
+    auth_method: api_key
+    api_base: __EMBEDDING_API_BASE__
+    api_key: ${EMBEDDING_API_KEY}
+    retry:
+      type: exponential_backoff
+input:
+  type: text
+  encoding: utf-8
+  file_pattern: __INPUT_FILE_PATTERN__
+chunking:
+  type: tokens
+  size: __CHUNK_SIZE__
+  overlap: __CHUNK_OVERLAP__
+  encoding_model: o200k_base
+input_storage:
+  type: file
+  base_dir: __INPUT_DIR__
+output_storage:
+  type: file
+  base_dir: __OUTPUT_DIR__
+update_output_storage:
+  type: file
+  base_dir: __UPDATE_OUTPUT_DIR__
+reporting:
+  type: file
+  base_dir: __LOG_DIR__
+cache:
+  type: json
+  storage:
+    type: file
+    base_dir: __CACHE_DIR__
+vector_store:
+  type: lancedb
+  db_uri: __VECTOR_DIR__
+  vector_size: __EMBEDDING_DIMENSIONS__
+embed_text:
+  embedding_model_id: default_embedding_model
+extract_graph:
+  completion_model_id: default_completion_model
+  prompt: __PROMPT_DIR__/extract_graph.txt
+  entity_types: __ENTITY_TYPES__
+  max_gleanings: 1
+summarize_descriptions:
+  completion_model_id: default_completion_model
+  prompt: __PROMPT_DIR__/summarize_descriptions.txt
+  max_length: 500
+cluster_graph:
+  max_cluster_size: 10
+  use_lcc: false
+  seed: 42
+extract_claims:
+  enabled: false
+  completion_model_id: default_completion_model
+  prompt: __PROMPT_DIR__/extract_claims.txt
+  max_gleanings: 1
+community_reports:
+  completion_model_id: default_completion_model
+  graph_prompt: __PROMPT_DIR__/community_report_graph.txt
+  text_prompt: __PROMPT_DIR__/community_report_text.txt
+  max_length: 1000
+  max_input_length: 8000
+snapshots:
+  graphml: true
+  raw_graph: true
+  embeddings: false
+local_search:
+  completion_model_id: default_completion_model
+  embedding_model_id: default_embedding_model
+  prompt: __PROMPT_DIR__/local_search_system_prompt.txt
+global_search:
+  completion_model_id: default_completion_model
+  map_prompt: __PROMPT_DIR__/global_search_map_system_prompt.txt
+  reduce_prompt: __PROMPT_DIR__/global_search_reduce_system_prompt.txt
+  knowledge_prompt: __PROMPT_DIR__/global_search_knowledge_system_prompt.txt
+drift_search:
+  completion_model_id: default_completion_model
+  embedding_model_id: default_embedding_model
+  prompt: __PROMPT_DIR__/drift_search_system_prompt.txt
+  reduce_prompt: __PROMPT_DIR__/drift_reduce_prompt.txt
+basic_search:
+  completion_model_id: default_completion_model
+  embedding_model_id: default_embedding_model
+  prompt: __PROMPT_DIR__/basic_search_system_prompt.txt

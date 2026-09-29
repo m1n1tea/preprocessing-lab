@@ -1,0 +1,18 @@
+# Shared final ontology for both indexing arms; see docs/domain_ontology.md.
+entity_types:
+  - PROCESS
+  - PROCESS_ROUTE
+  - PROCESS_STAGE
+  - COOLING_METHOD
+  - EQUIPMENT
+  - STEEL_GRADE
+  - ALLOY_FAMILY
+  - PRODUCT_FORM
+  - CHEMICAL_ELEMENT
+  - PRECIPITATE
+  - PHASE
+  - MICROSTRUCTURE
+  - PROPERTY
+  - PROCESS_CONDITION
+  - MODEL
+  - FORMULA
