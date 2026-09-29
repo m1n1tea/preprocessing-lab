@@ -1,6 +1,6 @@
 # Clean text preprocessing pipeline
 
-This document describes the current implementation that produces the text files in `data/clean/input/`. It describes code behavior; the repository currently contains no generated clean corpus to inspect.
+This document describes the current implementation that produces the text files in `data/clean/input/`. It describes code behavior; generated clean text, reports, and audit files are also present in this checkout.
 
 ## Entry point and inputs
 
