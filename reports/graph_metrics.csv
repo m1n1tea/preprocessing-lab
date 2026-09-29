@@ -1,0 +1,3 @@
+arm,articulation_points,average_clustering,average_degree,bridges,connected_components,cycle_basis_count,density,edge_count,isolated_nodes,largest_connected_component_nodes,largest_connected_component_ratio,node_count,orphan_relationship_endpoints
+dirty,379,0.06841659714416623,2.6846733668341707,711,199,744,0.0016874125498643436,2137,172,1315,0.8260050251256281,1592,0
+clean,318,0.22052015439059613,3.900600764609503,548,84,1824,0.002131475827655466,3571,64,1702,0.9295466957946478,1831,0

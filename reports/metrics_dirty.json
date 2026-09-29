@@ -1,0 +1,166 @@
+{
+  "arm": "dirty",
+  "domain": {
+    "domain_coverage": null,
+    "matched_terms": [],
+    "term_count": null,
+    "unmatched_terms": []
+  },
+  "generated_at": "2026-09-29T21:54:50.056942+00:00",
+  "gold_inputs": {
+    "coreference": false,
+    "domain_terms": false,
+    "entities": false,
+    "relations": false,
+    "traversal_queries": false
+  },
+  "graph": {
+    "articulation_points": 379,
+    "average_clustering": 0.06841659714416623,
+    "average_degree": 2.6846733668341707,
+    "bridges": 711,
+    "connected_components": 199,
+    "cycle_basis_count": 744,
+    "density": 0.0016874125498643436,
+    "edge_count": 2137,
+    "isolated_nodes": 172,
+    "largest_connected_component_nodes": 1315,
+    "largest_connected_component_ratio": 0.8260050251256281,
+    "node_count": 1592,
+    "orphan_relationship_endpoints": 0
+  },
+  "graph_artifacts": {
+    "entities": "data/dirty/graphrag/output/entities.parquet",
+    "entity_rows": 1592,
+    "relationship_rows": 2170,
+    "relationships": "data/dirty/graphrag/output/relationships.parquet"
+  },
+  "integrity": {
+    "formula_details": {
+      "expected": 14,
+      "formula_integrity": 1.0,
+      "missing_structures": [],
+      "preserved": 14,
+      "preserved_structures": [
+        {
+          "document": "stat3",
+          "page": 9
+        },
+        {
+          "document": "tanaka1981",
+          "page": 5
+        },
+        {
+          "document": "tanaka1981",
+          "page": 5
+        },
+        {
+          "document": "tanaka1981",
+          "page": 6
+        },
+        {
+          "document": "tanaka1981",
+          "page": 16
+        },
+        {
+          "document": "tanaka1981",
+          "page": 16
+        },
+        {
+          "document": "tanaka1981",
+          "page": 16
+        },
+        {
+          "document": "tanaka1981",
+          "page": 17
+        },
+        {
+          "document": "tanaka1981",
+          "page": 17
+        },
+        {
+          "document": "tanaka1981",
+          "page": 17
+        },
+        {
+          "document": "tanaka1981",
+          "page": 18
+        },
+        {
+          "document": "tanaka1981",
+          "page": 18
+        },
+        {
+          "document": "tanaka1981",
+          "page": 18
+        },
+        {
+          "document": "tanaka1981",
+          "page": 18
+        }
+      ],
+      "scope": "selected CLEAN table extraction or source MinerU structures preserved in the arm's GraphRAG input corpus"
+    },
+    "formula_integrity": 1.0,
+    "table_details": {
+      "expected": 1,
+      "missing_structures": [],
+      "preserved": 1,
+      "preserved_structures": [
+        {
+          "document": "stat3",
+          "page": 8
+        }
+      ],
+      "scope": "selected CLEAN table extraction or source MinerU structures preserved in the arm's GraphRAG input corpus",
+      "table_integrity": 1.0
+    },
+    "table_integrity": 1.0
+  },
+  "notes": [
+    "Structural topology uses a simple undirected graph; duplicate and reverse edges collapse.",
+    "Relation scores use directed source-target pairs because GraphRAG 3.2 has no predicate column.",
+    "Unavailable gold-dependent scores are null, not zero.",
+    "Formula/table integrity compares MinerU structures with arm input text, not extracted graph claims.",
+    "Retrieval metrics rank reachable nodes by BFS distance, then degree, then name. They are graph-neighborhood proxies, not GraphRAG LLM search scores."
+  ],
+  "schema_version": 1,
+  "semantic": {
+    "coreference": {
+      "accuracy": null,
+      "mention_count": 0,
+      "pair_count": 0,
+      "resolved_mentions": 0
+    },
+    "coreference_accuracy": null,
+    "entity_counts": {
+      "false_negative": null,
+      "false_positive": null,
+      "true_positive": null
+    },
+    "entity_gold_available": false,
+    "entity_metric_unavailable_reason": "data/gold/entities.csv is missing or empty",
+    "entity_precision": null,
+    "entity_recall": null,
+    "noise_ratio": null,
+    "relation_counts": {
+      "false_negative": null,
+      "false_positive": null,
+      "true_positive": null
+    },
+    "relation_gold_available": false,
+    "relation_precision": null,
+    "relation_recall": null
+  },
+  "traversal": {
+    "bfs_noise_ratio_at_2": null,
+    "bfs_recall_at_2": null,
+    "hit_rate_at_10": null,
+    "mrr": null,
+    "ndcg_at_10": null,
+    "query_count": 0,
+    "query_metrics": [],
+    "shortest_path_success_rate": null,
+    "unavailable_reason": "data/gold/traversal_queries.csv is missing"
+  }
+}

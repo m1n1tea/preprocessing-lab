@@ -1,0 +1,20 @@
+{
+  "dirty": {
+    "command": "uv run python -m metallab index --arm dirty",
+    "completed": false,
+    "failed_workflow": "generate_text_embeddings",
+    "error_type": "ContextWindowExceededError",
+    "cause": "The local embedding endpoint has a 2048-token context limit and rejected one input of at least 2049 tokens.",
+    "graph_artifacts_written": ["entities.parquet", "relationships.parquet", "communities.parquet", "community_reports.parquet", "graph.graphml"],
+    "shared_configuration_changed": false
+  },
+  "clean": {
+    "command": "uv run python -m metallab index --arm clean",
+    "completed": false,
+    "failed_workflow": "generate_text_embeddings",
+    "error_type": "ContextWindowExceededError",
+    "cause": "The local embedding endpoint has a 2048-token context limit and rejected one input of at least 2049 tokens.",
+    "graph_artifacts_written": ["entities.parquet", "relationships.parquet", "communities.parquet", "community_reports.parquet", "graph.graphml"],
+    "shared_configuration_changed": false
+  }
+}

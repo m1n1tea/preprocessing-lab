@@ -26,8 +26,8 @@
   "generation_model": "deepseek-v4.1-flash",
   "graphrag_version": "3.2.0",
   "input_sha256": {
-    "stat3.txt": "dffd9278d525fb750f1bb76613ac7419415148bec1805c348c9bf8b57d3f5cbc",
-    "tanaka1981.txt": "695ce8633f078d8781776fcd041775cd6a5179e9ac9d7cf1145691e938e95746"
+    "stat3.txt": "421d16a3a6894dc8fbd49528f4eacc76d52b303d6b6e66c3a6ce34c80d277975",
+    "tanaka1981.txt": "ce2ac28586d9cb677682ed8f60e08c1cabf2ea30e35639f27d7ad790bcc4f337"
   },
   "mode": "runtime",
   "prompt_sha256": {

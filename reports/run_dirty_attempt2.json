@@ -1,0 +1,45 @@
+{
+  "arm": "dirty",
+  "chunk_count": 50,
+  "chunking": {
+    "overlap": 120,
+    "size": 800
+  },
+  "configuration_hash": "624371d2c41075f267383d0f973e7bf6424ea02a9fd34b5d7a2d48c3aabacc6b",
+  "embedding_model": "qwen3-embedding-4b",
+  "end_time": "2026-09-29T17:51:17.964754+00:00",
+  "entity_count": 1570,
+  "error": "GraphRAG exited with code 1",
+  "exit_code": 1,
+  "generation_model": "gpt-5.6-luna",
+  "graphrag_version": "3.2.0",
+  "input_document_count": 2,
+  "input_documents": [
+    "stat3.txt",
+    "tanaka1981.txt"
+  ],
+  "input_sha256": {
+    "stat3.txt": "f2816947108ac3bf0f7c16c94119508e53d9d6be299782873c5b884d7e96e28a",
+    "tanaka1981.txt": "c69126b819613e05c95ac6a94d7b73a0f04599109266159f71879b79e7a1fc42"
+  },
+  "log_path": "reports/index_dirty.log",
+  "output_document_count": 2,
+  "prompt_sha256": {
+    "basic_search_system_prompt.txt": "b59c034e7a494a9a267a3ae8c1b70324f7dd4c49a110c6af018edbde730824d5",
+    "community_report_graph.txt": "28c329ad48eb3ee6ad50e88dd185f0e341c241e09c90327b5a2107d676c802a4",
+    "community_report_text.txt": "1622c6e0c6cc4951f5a5e63ea49aa9cf39ecd71a3aecaa5bdd6c2fa209aa455b",
+    "drift_reduce_prompt.txt": "792b906898bb4f2c72b0647aa81e20e57155d252fc55754c4a9f31543f33ef17",
+    "drift_search_system_prompt.txt": "5bf83e803286ba1618f48c2ede8327663de1b7eb5f9945cd2ab5d1956e7ad6d0",
+    "extract_claims.txt": "e3211f8dbb0c19610cd344de4d2877122a0d15d16b69c2b6d329f00e6a097b69",
+    "extract_graph.txt": "6bc652eddfff5a7d44bef24561f55fa64be62d400896f0f7a177982b7af4954a",
+    "global_search_knowledge_system_prompt.txt": "b51eff360b2e08bcbd34d5eeff803b541e5178eaaa1c51da57d16fc36131822c",
+    "global_search_map_system_prompt.txt": "5b0c4a052245d1d2328422184f7bf5ebcd33f124dae8695953d7d68f4440da39",
+    "global_search_reduce_system_prompt.txt": "6bc9e3f23e5509c10d3332f0d19c6cd85ee2d4d7b94e3f60f8ed5f094e717185",
+    "local_search_system_prompt.txt": "52f26f5642a62127245f49ab2e8787a3f143cbb77f74123d834172591f9e9fd5",
+    "summarize_descriptions.txt": "4f4e4e14a709fb3579197a79f0fab5b786462fbefb216105da89a692b7fb4018"
+  },
+  "relationship_count": 1999,
+  "settings_sha256": "3614e54029bc58c7cf1a8a05647c6692ef84fc6eacdada39fbce2cb0a8e6bd07",
+  "start_time": "2026-09-29T17:28:22.905820+00:00",
+  "status": "failed"
+}

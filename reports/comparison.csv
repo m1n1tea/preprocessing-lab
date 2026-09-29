@@ -1,0 +1,35 @@
+metric,dirty,clean,clean_minus_dirty
+articulation_points,379,318,-61
+average_clustering,0.06841659714416623,0.22052015439059613,0.1521035572464299
+average_degree,2.6846733668341707,3.900600764609503,1.2159273977753324
+bfs_noise_ratio_at_2,,,
+bfs_recall_at_2,,,
+bridges,711,548,-163
+connected_components,199,84,-115
+coreference_accuracy,,,
+cycle_basis_count,744,1824,1080
+density,0.0016874125498643436,0.002131475827655466,0.00044406327779112254
+domain_coverage,,,
+edge_count,2137,3571,1434
+entity_gold_available,False,False,0
+entity_metric_unavailable_reason,data/gold/entities.csv is missing or empty,data/gold/entities.csv is missing or empty,
+entity_precision,,,
+entity_recall,,,
+formula_integrity,1.0,1.0,0.0
+hit_rate_at_10,,,
+isolated_nodes,172,64,-108
+largest_connected_component_nodes,1315,1702,387
+largest_connected_component_ratio,0.8260050251256281,0.9295466957946478,0.10354167066901965
+mrr,,,
+ndcg_at_10,,,
+node_count,1592,1831,239
+noise_ratio,,,
+orphan_relationship_endpoints,0,0,0
+query_count,0,0,0
+relation_gold_available,False,False,0
+relation_precision,,,
+relation_recall,,,
+shortest_path_success_rate,,,
+table_integrity,1.0,1.0,0.0
+term_count,,,
+unavailable_reason,data/gold/traversal_queries.csv is missing,data/gold/traversal_queries.csv is missing,
