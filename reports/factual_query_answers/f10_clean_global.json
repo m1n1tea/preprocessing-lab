@@ -1,0 +1,13 @@
+{
+  "query_id": "f10",
+  "arm": "clean",
+  "method": "global",
+  "query": "What is Eq. (8) for the Hall–Petch yield-stress relation? Give the equation only.",
+  "started_at": "2026-09-30T01:12:28.402177+00:00",
+  "ended_at": "2026-09-30T01:12:49.897905+00:00",
+  "duration_seconds": 21.5,
+  "exit_code": 0,
+  "error": null,
+  "stdout": "Eq. (8): σ_y = σ_0 + k_y d^(−1/2) = (σ_lh + σ_sh + σ_dh + σ_ph) + k_y d^(−1/2) [Data: Reports (445, 30, 442, 181, 13, +more)].\n",
+  "stderr": ""
+}

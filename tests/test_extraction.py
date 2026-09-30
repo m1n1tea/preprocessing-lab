@@ -32,7 +32,7 @@ def _project(tmp_path: Path) -> tuple[Path, Path]:
         "  - {id: tanaka1981, path: data/source/tanaka1981.pdf}\n"
         "chunking: {size: 800, overlap: 120}\n"
         "paths: {mineru: data/mineru, dirty: data/dirty, clean: data/clean, "
-        "gold: data/gold, reports: reports}\n",
+        "reports: reports}\n",
         encoding="utf-8",
     )
     settings = config_dir / "mineru.yaml"

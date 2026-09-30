@@ -19,12 +19,12 @@ def formula_metadata(original: str, *, enabled: bool) -> dict[str, Any]:
     try:
         from sympy.parsing.latex import parse_latex
 
-        expression = parse_latex(original)
+        expression = parse_latex(original, strict=True)
         result["canonical"] = str(expression)
         result["sympy_valid"] = True
-    except ImportError:
-        result["warning"] = "Install the optional formulas extra to enable SymPy validation"
+    except ImportError as error:
+        result["warning"] = f"SymPy LaTeX parser unavailable: {error}"
     except Exception as error:  # Parsing is best effort; original formula always survives.
         result["sympy_valid"] = False
-        result["warning"] = f"SymPy could not parse formula: {type(error).__name__}"
+        result["warning"] = f"SymPy could not parse the complete formula: {type(error).__name__}"
     return result

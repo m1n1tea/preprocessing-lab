@@ -11,6 +11,7 @@
     "control_codepoints_removed": 0,
     "formula_protected": 1,
     "formula_restored": 1,
+    "formula_validation_failures": 1,
     "hyphenation_repair": 97,
     "integrity_validated": 1,
     "invalid_mineru_tables": 0,
@@ -33,7 +34,7 @@
   "dehyphenation_repairs": 97,
   "document": "stat3",
   "footers_removed": 0,
-  "formula_validation_failures": 0,
+  "formula_validation_failures": 1,
   "formulas": [
     {
       "canonical": null,
@@ -42,8 +43,8 @@
       "latex": "\\mathbf{G}_{\\mathrm{e}}[\\mathrm{u}^{3}/\\mathrm{trace}]=870-1076(\\mathrm{T}_{\\mathrm{s}}\\mathrm{cp}\\mathrm{u}-\\mathrm{T}_{\\mathrm{c}})/(\\mathrm{T}_{0}-\\mathrm{T}_{\\mathrm{c}})+6.65(\\mathrm{S}-1)\\delta+0.164G_{\\mathrm{u}}",
       "original": "\\mathbf{G}_{\\mathrm{e}}[\\mathrm{u}^{3}/\\mathrm{trace}]=870-1076(\\mathrm{T}_{\\mathrm{s}}\\mathrm{cp}\\mathrm{u}-\\mathrm{T}_{\\mathrm{c}})/(\\mathrm{T}_{0}-\\mathrm{T}_{\\mathrm{c}})+6.65(\\mathrm{S}-1)\\delta+0.164G_{\\mathrm{u}}",
       "page": 9,
-      "sympy_valid": null,
-      "warning": "SymPy validation disabled by configuration"
+      "sympy_valid": false,
+      "warning": "SymPy could not parse the complete formula: LaTeXParsingError"
     }
   ],
   "formulas_protected": 1,

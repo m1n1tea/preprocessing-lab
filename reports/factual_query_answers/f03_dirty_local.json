@@ -1,0 +1,13 @@
+{
+  "query_id": "f03",
+  "arm": "dirty",
+  "method": "local",
+  "query": "What maximum rolling-rate increase is reported for high-temperature rolling with accelerated cooling? Give percent.",
+  "started_at": "2026-09-30T00:41:41.348193+00:00",
+  "ended_at": "2026-09-30T00:41:51.969677+00:00",
+  "duration_seconds": 10.62,
+  "exit_code": 0,
+  "error": null,
+  "stdout": "**Up to 20%** [Data: Entities (1156, 1572); Relationships (1655, 2136, 2116); Sources (48, 39)].\n",
+  "stderr": ""
+}

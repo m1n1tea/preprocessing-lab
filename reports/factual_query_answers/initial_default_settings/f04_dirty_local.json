@@ -1,0 +1,13 @@
+{
+  "query_id": "f04",
+  "arm": "dirty",
+  "method": "local",
+  "query": "For a roughly 50 mm slab, what air-cooling hold time before finishing is reported? Give seconds.",
+  "started_at": "2026-09-30T00:32:50.216862+00:00",
+  "ended_at": "2026-09-30T00:33:02.392277+00:00",
+  "duration_seconds": 12.18,
+  "exit_code": 0,
+  "error": null,
+  "stdout": "For a roughly 50 mm slab, the air-cooling hold before finishing is reported as about 300 s [Data: Entities (1256, 1274); Relationships (1774, 1810, 1823); Sources (41, 42)].\n",
+  "stderr": ""
+}

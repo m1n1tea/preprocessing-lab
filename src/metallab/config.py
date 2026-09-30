@@ -33,7 +33,6 @@ class PathsConfig(BaseModel):
     mineru: Path
     dirty: Path
     clean: Path
-    gold: Path
     reports: Path
 
 

@@ -1,0 +1,13 @@
+{
+  "query_id": "f09",
+  "arm": "clean",
+  "method": "local",
+  "query": "Which element retards austenite recrystallization in Tanaka’s review? Give its name.",
+  "started_at": "2026-09-30T00:33:53.231692+00:00",
+  "ended_at": "2026-09-30T00:34:05.596412+00:00",
+  "duration_seconds": 12.36,
+  "exit_code": 0,
+  "error": null,
+  "stdout": "**Niobium (Nb)** retards austenite recrystallization in Tanaka’s review [Data: Reports (5); Entities (42, 91); Relationships (91, 2556)].\n",
+  "stderr": ""
+}

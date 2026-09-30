@@ -1,0 +1,13 @@
+{
+  "query_id": "f10",
+  "arm": "dirty",
+  "method": "global",
+  "query": "What is Eq. (8) for the Hall–Petch yield-stress relation? Give the equation only.",
+  "started_at": "2026-09-30T01:12:27.160450+00:00",
+  "ended_at": "2026-09-30T01:12:48.769276+00:00",
+  "duration_seconds": 21.61,
+  "exit_code": 0,
+  "error": null,
+  "stdout": "**Eq. (8):** σᵧ = σ₀ + KᵧD⁻¹ᐟ², where σ₀ includes lattice, solid-solution, dislocation, and precipitation hardening terms [Data: Reports (187)].\n",
+  "stderr": ""
+}

@@ -1,0 +1,13 @@
+{
+  "query_id": "f07",
+  "arm": "clean",
+  "method": "local",
+  "query": "What feature divides unrecrystallized austenite grains during controlled rolling? Name it.",
+  "started_at": "2026-09-30T00:42:31.748552+00:00",
+  "ended_at": "2026-09-30T00:42:43.059225+00:00",
+  "duration_seconds": 11.31,
+  "exit_code": 0,
+  "error": null,
+  "stdout": "**Deformation bands** divide unrecrystallized austenite grains into blocks during controlled rolling [Data: Entities (22, 21); Relationships (17, 405)].\n",
+  "stderr": ""
+}

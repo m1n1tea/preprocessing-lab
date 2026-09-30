@@ -134,47 +134,25 @@ Dirty and clean must use identical entity types.
 
 ### Structural metrics
 
-V
-E
-density
-connected components
-largest connected component
-isolated vertices
-degree distribution
-bridges
-articulation points
-cycles
-cyclomatic number
-clustering
-shortest path statistics
-
-### Semantic metrics
-
-Entity precision
-Entity recall
-Relation precision
-Relation recall
-Coreference accuracy
-Noise ratio
-Domain coverage
+Node count
+Unique undirected edge count
+Density
+Connected components
+Largest connected component ratio
+Isolated nodes
+Average degree
+Bridges
+Articulation points
+Cycle basis count
+Average clustering
 
 ### Structure preservation
 
 Formula integrity
 Table integrity
-Numeric-value integrity
-Unit integrity
 
-### Traversals
-
-BFS
-DFS
-shortest path
-bidirectional shortest path
-
-Test traversals from predefined domain entities.
-
-Measure both runtime and semantic usefulness.
+A separate set of short, source-checked questions compares local and global
+GraphRAG answers for the DIRTY and CLEAN graphs.
 
 ---
 
@@ -184,7 +162,6 @@ Generate:
 
 reports/comparison.csv
 reports/graph_metrics.csv
-reports/traversal_metrics.csv
 reports/dirty_graph.graphml
 reports/clean_graph.graphml
 reports/final_report.md

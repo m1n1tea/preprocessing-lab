@@ -1,0 +1,13 @@
+{
+  "query_id": "f03",
+  "arm": "clean",
+  "method": "drift",
+  "query": "What maximum rolling-rate increase is reported for high-temperature rolling with accelerated cooling? Give percent.",
+  "started_at": "2026-09-30T00:50:05.511387+00:00",
+  "ended_at": "2026-09-30T00:52:29.288334+00:00",
+  "duration_seconds": 143.78,
+  "exit_code": 0,
+  "error": null,
+  "stdout": "The maximum reported rolling-rate increase is 20% for high-temperature controlled rolling with accelerated cooling [Data: Reports (2); Sources (36, 42)].\n",
+  "stderr": "\r  0%|          | 0/5 [00:00<?, ?it/s]\r 20%|██        | 1/5 [00:48<03:12, 48.11s/it]\r 40%|████      | 2/5 [00:49<01:01, 20.47s/it]\r 60%|██████    | 3/5 [00:54<00:27, 13.67s/it]\r 80%|████████  | 4/5 [00:55<00:08,  8.72s/it]\r100%|██████████| 5/5 [01:10<00:00, 10.79s/it]\r                                             \r\r  0%|          | 0/4 [00:00<?, ?it/s]\r 25%|██▌       | 1/4 [00:21<01:04, 21.59s/it]\r 50%|█████     | 2/4 [00:24<00:20, 10.48s/it]\r 75%|███████▌  | 3/4 [00:34<00:10, 10.16s/it]\r100%|██████████| 4/4 [00:36<00:00,  7.12s/it]\r                                             \r"
+}

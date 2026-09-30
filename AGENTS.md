@@ -19,14 +19,9 @@ The experiment has two pipelines:
 Both PDFs must contribute to ONE graph in each pipeline.
 
 The goal is to measure how preprocessing affects:
-- entity extraction
-- relation extraction
-- graph connectivity
-- graph traversal
-- domain coverage
-- noise
-- coreference quality
+- graph structure and connectivity
 - preservation of formulas, tables, numbers and units
+- answers to short, source-checked metallurgical questions
 
 ## Important experimental rule
 
@@ -74,7 +69,6 @@ data/
   mineru/
   dirty/
   clean/
-  gold/
 
 src/
   extraction/
@@ -174,56 +168,11 @@ Also calculate:
 - betweenness centrality
 - PageRank
 
-## Traversal experiments
-
-Implement reusable experiments for:
-
-- BFS depth 1/2/3
-- DFS
-- shortest path
-- bidirectional shortest path
-
-Traversal quality is more important than raw execution time.
-
-Evaluate:
-
-- relevant nodes reached
-- noisy nodes reached
-- expected entities reached
-- path existence
-- path length
-
-## Ground truth
-
-Support manually maintained files:
-
-data/gold/entities.csv
-data/gold/relations.csv
-data/gold/coreference.csv
-data/gold/domain_terms.txt
-data/gold/traversal_queries.csv
-
-Do not fabricate gold labels.
-
 ## Evaluation metrics
 
-Calculate when gold data exists:
-
-- Entity Precision
-- Entity Recall
-- Relation Precision
-- Relation Recall
-- Coreference Accuracy
-- Noise Ratio
-- Formula Integrity
-- Table Integrity
-- Domain Coverage
-
-Retrieval:
-
-- HitRate@10
-- MRR
-- NDCG@10
+Evaluate graph topology and formula/table preservation from the saved
+GraphRAG and MinerU artifacts. Keep the source structures available for
+inspection and report what can be checked without invented labels.
 
 ## Cross-document analysis
 
@@ -233,7 +182,6 @@ Because two PDFs form one graph, calculate:
 - document-specific entities
 - cross-document edges
 - cross-document edge ratio
-- paths connecting concepts originating from different documents
 
 ## Reproducibility
 

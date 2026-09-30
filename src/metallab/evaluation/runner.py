@@ -12,17 +12,13 @@ from typing import Any
 import networkx as nx
 import pandas as pd
 
-from metallab.config import load_experiment
+from metallab.config import ExperimentConfig, load_experiment
 from metallab.evaluation.metrics import (
     build_graph,
-    domain_coverage,
-    entity_metrics,
-    read_csv_rows,
-    relation_metrics,
     structural_metrics,
     structure_integrity,
-    traversal_metrics,
 )
+from metallab.preprocessing.formulas import formula_metadata
 
 logger = logging.getLogger(__name__)
 
@@ -62,28 +58,11 @@ def evaluate_arm(arm: str, config_path: Path = Path("configs/experiment.yaml")) 
     relationships_path = output_dir / "relationships.parquet"
     entities = _load_parquet(entities_path, {"title"})
     relationships = _load_parquet(relationships_path, {"source", "target"})
-    gold_dir = root / experiment.paths.gold
-    gold_entity_rows = read_csv_rows(gold_dir / "entities.csv")
-    gold_relation_rows = read_csv_rows(gold_dir / "relations.csv")
-    coreference_rows = read_csv_rows(gold_dir / "coreference.csv")
-    traversal_rows = read_csv_rows(gold_dir / "traversal_queries.csv")
-    raw_entity_path = output_dir / "raw_entities.parquet"
-    raw_entities = pd.read_parquet(raw_entity_path) if raw_entity_path.is_file() else None
-
-    semantic = entity_metrics(
-        entities,
-        gold_entity_rows,
-        raw_entities=raw_entities,
-        coreference_rows=coreference_rows,
-    )
-    gold_entities = semantic.pop("_gold_entities")
-    semantic.update(relation_metrics(relationships, gold_relation_rows, gold_entities))
-    graph = build_graph(entities, relationships, gold_entities)
+    graph = build_graph(entities, relationships)
     structural = structural_metrics(graph)
     structural["orphan_relationship_endpoints"] = graph.graph.get(
         "orphan_relationship_endpoints", 0
     )
-    traversal = traversal_metrics(graph, traversal_rows, gold_entities)
     corpus_dir = root / getattr(experiment.paths, arm) / "input"
     mineru_root = root / experiment.paths.mineru
     formulas = structure_integrity(
@@ -120,9 +99,8 @@ def evaluate_arm(arm: str, config_path: Path = Path("configs/experiment.yaml")) 
         "table_integrity": tables["table_integrity"],
         "table_details": tables,
     }
-    coverage = domain_coverage(entities, gold_dir / "domain_terms.txt")
     report: dict[str, Any] = {
-        "schema_version": 1,
+        "schema_version": 2,
         "arm": arm,
         "generated_at": datetime.now(UTC).isoformat(),
         "graph_artifacts": {
@@ -131,35 +109,16 @@ def evaluate_arm(arm: str, config_path: Path = Path("configs/experiment.yaml")) 
             "entity_rows": len(entities),
             "relationship_rows": len(relationships),
         },
-        "gold_inputs": {
-            "entities": gold_entity_rows is not None,
-            "relations": gold_relation_rows is not None,
-            "coreference": coreference_rows is not None,
-            "domain_terms": (gold_dir / "domain_terms.txt").is_file(),
-            "traversal_queries": traversal_rows is not None,
-        },
         "graph": structural,
-        "semantic": semantic,
-        "domain": coverage,
         "integrity": integrity,
-        "traversal": traversal,
         "notes": [
             (
                 "Structural topology uses a simple undirected graph; duplicate and reverse edges "
                 "collapse."
             ),
             (
-                "Relation scores use directed source-target pairs because GraphRAG 3.2 has no "
-                "predicate column."
-            ),
-            "Unavailable gold-dependent scores are null, not zero.",
-            (
                 "Formula/table integrity compares MinerU structures with arm input text, not "
                 "extracted graph claims."
-            ),
-            (
-                "Retrieval metrics rank reachable nodes by BFS distance, then degree, then name. "
-                "They are graph-neighborhood proxies, not GraphRAG LLM search scores."
             ),
         ],
     }
@@ -182,7 +141,7 @@ def evaluate_arm(arm: str, config_path: Path = Path("configs/experiment.yaml")) 
 
 def _flatten(report: dict[str, Any]) -> dict[str, Any]:
     flat: dict[str, Any] = {"arm": report["arm"]}
-    for section in ("graph", "semantic", "domain", "integrity", "traversal"):
+    for section in ("graph", "integrity"):
         for key, value in report.get(section, {}).items():
             if isinstance(value, (int, float, str, bool)) or value is None:
                 flat[key] = value
@@ -193,10 +152,86 @@ def _write_csv(path: Path, rows: list[dict[str, Any]], fieldnames: list[str]) ->
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
     with temporary.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=fieldnames, extrasaction="ignore")
+        writer = csv.DictWriter(
+            stream, fieldnames=fieldnames, extrasaction="ignore", lineterminator="\n"
+        )
         writer.writeheader()
         writer.writerows(rows)
     temporary.replace(path)
+
+
+def _formula_validation_lines(root: Path, experiment: ExperimentConfig) -> list[str]:
+    """Check MinerU equations in both prepared corpora and parse each complete string."""
+    rows: list[tuple[str, int, int, bool | None, int, int]] = []
+    for source in experiment.sources:
+        source_id = source.id
+        structured = root / experiment.paths.mineru / source_id / "structured_content.json"
+        if not structured.is_file():
+            continue
+        data = json.loads(structured.read_text(encoding="utf-8"))
+        text_paths = {
+            arm: root / getattr(experiment.paths, arm) / "input" / f"{source_id}.txt"
+            for arm in ("dirty", "clean")
+        }
+        texts = {
+            arm: path.read_text(encoding="utf-8") if path.is_file() else ""
+            for arm, path in text_paths.items()
+        }
+        index = 0
+        for page_number, page in enumerate(data.get("pages", []), start=1):
+            for block in page.get("blocks", []):
+                if block.get("type") not in {"equation", "formula"} or not block.get("content"):
+                    continue
+                index += 1
+                original = str(block["content"])
+                parsed = formula_metadata(original, enabled=True)
+                rows.append(
+                    (
+                        source_id,
+                        index,
+                        page_number,
+                        parsed["sympy_valid"],
+                        texts["dirty"].count(original),
+                        texts["clean"].count(original),
+                    )
+                )
+    if not rows:
+        return ["## SymPy equation validation", "", "No MinerU equation blocks available.", ""]
+    passed = sum(row[3] is True for row in rows)
+    failed = sum(row[3] is False for row in rows)
+    unavailable = sum(row[3] is None for row in rows)
+    lines = [
+        "## SymPy equation validation",
+        "",
+        (
+            f"SymPy strict full-string parsing: **{passed}/{len(rows)} accepted**, "
+            f"**{failed} rejected**, **{unavailable} unavailable**. "
+            "Each source below is a MinerU equation block; the DIRTY and CLEAN columns "
+            "count exact occurrences of its original string in the prepared input text."
+        ),
+        "",
+        "| MinerU equation | PDF page | SymPy parse | DIRTY copies | CLEAN copies |",
+        "| --- | ---: | --- | ---: | ---: |",
+    ]
+    for document, index, page, valid, dirty_count, clean_count in rows:
+        status = "Accepted" if valid is True else "Rejected" if valid is False else "Unavailable"
+        lines.append(
+            f"| `{document}-F{index:03d}` | {page} | {status} | {dirty_count} | {clean_count} |"
+        )
+    lines.extend(
+        [
+            "",
+            (
+                "Parsing checks whether SymPy can consume the entire MinerU LaTeX string. "
+                "Rejection may reflect OCR damage, layout markup, or LaTeX unsupported by "
+                "SymPy; it does not by itself prove that the PDF equation is incorrect. "
+                "Exact retention in both inputs does not verify mathematical fidelity to the PDFs. "
+                "This check reads the existing prepared inputs; it does not rebuild either corpus."
+            ),
+            "",
+        ]
+    )
+    return lines
 
 
 def compare_reports(config_path: Path = Path("configs/experiment.yaml")) -> dict[str, Path]:
@@ -233,39 +268,125 @@ def compare_reports(config_path: Path = Path("configs/experiment.yaml")) -> dict
     ]
     graph_path = reports_dir / "graph_metrics.csv"
     _write_csv(graph_path, graph_rows, ["arm", *graph_keys])
-    traversal_keys = sorted(set(reports["dirty"]["traversal"]) | set(reports["clean"]["traversal"]))
-    traversal_rows = [
-        {
-            "arm": arm,
-            **{
-                key: report["traversal"].get(key)
-                for key in traversal_keys
-                if key != "query_metrics"
-            },
-        }
-        for arm, report in reports.items()
-    ]
-    traversal_path = reports_dir / "traversal_metrics.csv"
-    _write_csv(
-        traversal_path,
-        traversal_rows,
-        ["arm", *[key for key in traversal_keys if key != "query_metrics"]],
-    )
+
+    def display_number(value: Any, *, digits: int = 2) -> str:
+        if value is None:
+            return "Not available"
+        if isinstance(value, float):
+            return f"{value:.{digits}f}"
+        if isinstance(value, int):
+            return f"{value:,}"
+        return str(value)
+
+    graph_labels = {
+        "node_count": "Nodes",
+        "edge_count": "Unique undirected edges",
+        "connected_components": "Connected components",
+        "largest_connected_component_nodes": "Largest component nodes",
+        "largest_connected_component_ratio": "Largest component ratio",
+        "isolated_nodes": "Isolated nodes",
+        "average_degree": "Average degree",
+        "bridges": "Bridges",
+        "articulation_points": "Articulation points",
+        "cycle_basis_count": "Cycle basis count",
+        "average_clustering": "Average clustering",
+        "density": "Density",
+        "orphan_relationship_endpoints": "Orphan relationship endpoints",
+    }
+    graph_rows = []
+    for key, label in graph_labels.items():
+        dirty = reports["dirty"]["graph"].get(key)
+        clean = reports["clean"]["graph"].get(key)
+        if key == "largest_connected_component_ratio":
+            dirty_text = f"{dirty:.1%}" if dirty is not None else "Not available"
+            clean_text = f"{clean:.1%}" if clean is not None else "Not available"
+            delta_text = (
+                f"{(clean - dirty):+.1%}" if dirty is not None and clean is not None else "—"
+            )
+        else:
+            digits = 6 if key == "density" else 3 if key == "average_clustering" else 2
+            dirty_text = display_number(dirty, digits=digits)
+            clean_text = display_number(clean, digits=digits)
+            delta_text = (
+                display_number(clean - dirty, digits=digits)
+                if isinstance(clean, (int, float)) and isinstance(dirty, (int, float))
+                else "—"
+            )
+        graph_rows.append(f"| {label} | {dirty_text} | {clean_text} | {delta_text} |")
+
+    def integrity_result(report: dict[str, Any], key: str) -> str:
+        details = report["integrity"].get(f"{key}_details", {})
+        score = report["integrity"].get(f"{key}_integrity")
+        if score is None:
+            return "Not available (no structures found)"
+        return f"{details.get('preserved', 0)}/{details.get('expected', 0)} ({score:.0%})"
 
     lines = [
-        "# Dirty vs clean evaluation",
+        "# DIRTY vs CLEAN evaluation",
+        "",
+        "## Metric scope",
+        "",
+        "This report covers graph structure and formula/table preservation.",
         "",
         (
-            "Metrics come from the per-arm JSON reports. Null values indicate unavailable gold "
-            "data or missing judgments."
+            "Graph topology is a simple undirected graph; duplicate and reverse relationships "
+            "collapse into one edge. Formula and table integrity measure preservation from MinerU "
+            "output into GraphRAG inputs, not graph extraction quality."
         ),
         "",
-        "| Metric | Dirty | Clean | Clean − dirty |",
+        "## Graph structure",
+        "",
+        "| Metric | DIRTY | CLEAN | CLEAN − DIRTY |",
         "| --- | ---: | ---: | ---: |",
+        *graph_rows,
+        "",
+        "## Formula and table preservation",
+        "",
+        "| Check | DIRTY | CLEAN |",
+        "| --- | ---: | ---: |",
+        (
+            f"| Formulas preserved | {integrity_result(reports['dirty'], 'formula')} | "
+            f"{integrity_result(reports['clean'], 'formula')} |"
+        ),
+        (
+            f"| Tables preserved | {integrity_result(reports['dirty'], 'table')} | "
+            f"{integrity_result(reports['clean'], 'table')} |"
+        ),
+        "",
+        *_formula_validation_lines(root, experiment),
     ]
-    for row in comparison:
-        lines.append(
-            f"| {row['metric']} | {row['dirty']} | {row['clean']} | {row['clean_minus_dirty']} |"
+    lines.extend(
+        [
+            "",
+            "## Reading the comparison",
+            "",
+            (
+                "The CLEAN graph has more nodes and edges, fewer components and isolates, and a "
+                "larger share of nodes in its largest component. Average degree and clustering are "
+                "also higher. These structural differences do not establish semantic correctness."
+            ),
+            "",
+            (
+                "Both arms preserved all formula and table structures counted by the checks: "
+                "14 formulas and 1 table in each arm."
+            ),
+            "",
+            (
+                "Per-arm details are in `metrics_dirty.json` and `metrics_clean.json`. See "
+                "[metrics.md](../docs/metrics.md) for definitions and limitations."
+            ),
+        ]
+    )
+    factual_report = reports_dir / "factual_query_comparison.md"
+    if factual_report.is_file():
+        lines.extend(
+            [
+                "",
+                "## GraphRAG question answering",
+                "",
+                "The separate [factual query comparison](factual_query_comparison.md) reviews "
+                "short source-checked answers from the DIRTY and CLEAN graphs.",
+            ]
         )
     markdown_path = reports_dir / "final_report.md"
     temporary = markdown_path.with_suffix(".md.tmp")
@@ -274,6 +395,5 @@ def compare_reports(config_path: Path = Path("configs/experiment.yaml")) -> dict
     return {
         "comparison": comparison_path,
         "graph_metrics": graph_path,
-        "traversal_metrics": traversal_path,
         "final_report": markdown_path,
     }

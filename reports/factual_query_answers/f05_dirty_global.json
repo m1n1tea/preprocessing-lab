@@ -1,0 +1,13 @@
+{
+  "query_id": "f05",
+  "arm": "dirty",
+  "method": "global",
+  "query": "In the КП+УО+КП route, how many finishing passes occur before and after accelerated cooling? Give two integers.",
+  "started_at": "2026-09-30T01:02:37.752624+00:00",
+  "ended_at": "2026-09-30T01:03:02.286683+00:00",
+  "duration_seconds": 24.53,
+  "exit_code": 0,
+  "error": null,
+  "stdout": "**Answer:** 5 before accelerated cooling and 3 after [Data: Reports (258, 245, 277, 279, 2, +more)].\n",
+  "stderr": ""
+}

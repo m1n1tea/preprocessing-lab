@@ -1,3 +1,0 @@
-arm,bfs_noise_ratio_at_2,bfs_recall_at_2,hit_rate_at_10,mrr,ndcg_at_10,query_count,shortest_path_success_rate,unavailable_reason
-dirty,,,,,,0,,data/gold/traversal_queries.csv is missing
-clean,,,,,,0,,data/gold/traversal_queries.csv is missing

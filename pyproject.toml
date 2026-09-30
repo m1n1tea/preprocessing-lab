@@ -29,7 +29,7 @@ metallab = "metallab.cli:app"
 
 [project.optional-dependencies]
 formulas = [
-    "antlr4-python3-runtime>=4.13,<5",
+    "antlr4-python3-runtime>=4.11,<4.12",
     "sympy>=1.13,<2",
 ]
 

@@ -93,23 +93,6 @@ These are proposed edge roles, **not asserted graph results**:
 
 Attach document/page provenance to every extracted entity and relation. Store numerical values, units, ranges, route order, and equation numbers as evidence/attributes; avoid creating isolated nodes for each table entry or symbol. This preserves the ability to test cross-document paths without inflating graph noise.
 
-## Cross-document traversal questions to test after indexing
-
-1. **Controlled rolling → recrystallization → austenite/ferrite → toughness.** S1 describes changing the temperature and deformation regime to refine ferrite; T1 and T5 describe recrystallization, deformation bands, and ferrite nucleation. The path should keep stage-specific evidence rather than implying that every route has the same mechanism.
-2. **Cooling → process route → microstructure/property.** Compare S's air hold and `КП+УО(+КП)` alternatives ([S3–6](../data/source/stat3.pdf#page=3)) with T's controlled cooling and plate/strip differences ([T2](../data/source/tanaka1981.pdf#page=2), [T21](../data/source/tanaka1981.pdf#page=21)). Do not equate the methods without matching context.
-3. **Deformation → Nb-bearing alloy/precipitate → recrystallization → grain size.** S discusses reductions and Nb-bearing low-pearlite steels ([S1](../data/source/stat3.pdf#page=1), [S4](../data/source/stat3.pdf#page=4)); T explicitly links Nb(C,N) precipitation to retarded recrystallization and fine α grains ([T2](../data/source/tanaka1981.pdf#page=2), [T9–12](../data/source/tanaka1981.pdf#page=9)). The precipitate-specific edge belongs to T unless S's page evidence identifies it.
-4. **Model → formula → measured outcome.** S's water-flow cooling model ([S9](../data/source/stat3.pdf#page=9)) and T's Hall–Petch yield-stress relation ([T17](../data/source/tanaka1981.pdf#page=17)) should be retrievable as different models, with equations checked against the PDFs.
-
 ## Configuration and index status
 
-`configs/graphrag/entity_types.yaml` and both generated workspace settings use this shared list. The DIRTY graph has been indexed with these entity types; the CLEAN workspace has not yet been indexed. When the ontology or extraction prompt changes, regenerate and validate both workspaces, then rebuild both graphs before comparing them.
-
-## Evaluation labels for the ontology
-
-Use the canonical concepts and Russian/English aliases above to curate
-`data/gold/entities.csv` and `data/gold/domain_terms.txt`. Store aliases as
-pipe-separated variants on the reviewed canonical entity/term row. Keep the
-cross-document traversal prompts above as candidates; enter only manually
-reviewed seeds and expected entities into `data/gold/traversal_queries.csv`.
-The evaluator's matching rules and score definitions are documented in
-[metrics.md](metrics.md). Do not treat this proposal itself as gold annotation.
+`configs/graphrag/entity_types.yaml` and both generated workspace settings use this shared list. Both graphs have been indexed with these entity types. When the ontology or extraction prompt changes, regenerate and validate both workspaces, then rebuild both graphs before comparing them.

@@ -1,0 +1,13 @@
+{
+  "query_id": "f02",
+  "arm": "clean",
+  "method": "local",
+  "query": "What accelerated-cooling rate after deformation is reported for thick plate? Give °C/s.",
+  "started_at": "2026-09-30T00:41:30.978525+00:00",
+  "ended_at": "2026-09-30T00:41:41.833593+00:00",
+  "duration_seconds": 10.86,
+  "exit_code": 0,
+  "error": null,
+  "stdout": "**10–30°C/s** is the accelerated-cooling rate reported after deformation [Data: Entities (1233, 1261); Relationships (2711); Sources (36)].\n",
+  "stderr": ""
+}

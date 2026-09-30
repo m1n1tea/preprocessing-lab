@@ -1,0 +1,11 @@
+query_id,query_text,source_document,source_pdf_page,source_check_note
+f01,"At Azovstal mill 3600, what high-temperature controlled-rolling range is reported? Give °C.",stat3.pdf,1,730–800 °C
+f02,What accelerated-cooling rate after deformation is reported for thick plate? Give °C/s.,stat3.pdf,1,10–30 °C/s
+f03,What maximum rolling-rate increase is reported for high-temperature rolling with accelerated cooling? Give percent.,stat3.pdf,1,up to 20%
+f04,"Under existing low-temperature controlled rolling at mill 3600, how long is the air-cooling hold for a roughly 50 mm slab? Give seconds.",stat3.pdf,3,about 300 s
+f05,"In the КП+УО+КП route, how many finishing passes occur before and after accelerated cooling? Give two integers.",stat3.pdf,4,5 before; 3 after
+f06,Which controlled-rolling stage uses the non-recrystallization region? Give the stage number.,tanaka1981.pdf,1,stage 2
+f07,What feature divides unrecrystallized austenite grains during controlled rolling? Name it.,tanaka1981.pdf,1,deformation bands
+f08,"Besides austenite grain boundaries, where does ferrite nucleate in controlled-rolled steel? Name the site.",tanaka1981.pdf,1,austenite grain interior
+f09,Which element retards austenite recrystallization? Give its name.,tanaka1981.pdf,2,niobium (Nb)
+f10,What is Eq. (8) for the Hall–Petch yield-stress relation? Give the equation only.,tanaka1981.pdf,17,σ_y = σ_0 + k_y d^(-1/2)

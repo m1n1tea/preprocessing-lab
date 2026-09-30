@@ -13,6 +13,7 @@
 - `footer_removed`: 28
 - `formula_protected`: 13
 - `formula_restored`: 13
+- `formula_validation_failures`: 13
 - `header_removed`: 27
 - `integrity_validated`: 1
 - `number_unit_protected`: 21
@@ -33,19 +34,19 @@
 
 ## Formula checks
 
-- tanaka1981-F001 page 5: SymPy=None; SymPy validation disabled by configuration
-- tanaka1981-F002 page 5: SymPy=None; SymPy validation disabled by configuration
-- tanaka1981-F003 page 6: SymPy=None; SymPy validation disabled by configuration
-- tanaka1981-F004 page 16: SymPy=None; SymPy validation disabled by configuration
-- tanaka1981-F005 page 16: SymPy=None; SymPy validation disabled by configuration
-- tanaka1981-F006 page 16: SymPy=None; SymPy validation disabled by configuration
-- tanaka1981-F007 page 17: SymPy=None; SymPy validation disabled by configuration
-- tanaka1981-F008 page 17: SymPy=None; SymPy validation disabled by configuration
-- tanaka1981-F009 page 17: SymPy=None; SymPy validation disabled by configuration
-- tanaka1981-F010 page 18: SymPy=None; SymPy validation disabled by configuration
-- tanaka1981-F011 page 18: SymPy=None; SymPy validation disabled by configuration
-- tanaka1981-F012 page 18: SymPy=None; SymPy validation disabled by configuration
-- tanaka1981-F013 page 18: SymPy=None; SymPy validation disabled by configuration
+- tanaka1981-F001 page 5: SymPy=False; SymPy could not parse the complete formula: LaTeXParsingError
+- tanaka1981-F002 page 5: SymPy=False; SymPy could not parse the complete formula: LaTeXParsingError
+- tanaka1981-F003 page 6: SymPy=False; SymPy could not parse the complete formula: LaTeXParsingError
+- tanaka1981-F004 page 16: SymPy=False; SymPy could not parse the complete formula: LaTeXParsingError
+- tanaka1981-F005 page 16: SymPy=False; SymPy could not parse the complete formula: LaTeXParsingError
+- tanaka1981-F006 page 16: SymPy=False; SymPy could not parse the complete formula: LaTeXParsingError
+- tanaka1981-F007 page 17: SymPy=False; SymPy could not parse the complete formula: LaTeXParsingError
+- tanaka1981-F008 page 17: SymPy=False; SymPy could not parse the complete formula: LaTeXParsingError
+- tanaka1981-F009 page 17: SymPy=False; SymPy could not parse the complete formula: LaTeXParsingError
+- tanaka1981-F010 page 18: SymPy=False; SymPy could not parse the complete formula: LaTeXParsingError
+- tanaka1981-F011 page 18: SymPy=False; SymPy could not parse the complete formula: LaTeXParsingError
+- tanaka1981-F012 page 18: SymPy=False; SymPy could not parse the complete formula: LaTeXParsingError
+- tanaka1981-F013 page 18: SymPy=False; SymPy could not parse the complete formula: LaTeXParsingError
 
 ## OCR and processing warnings
 

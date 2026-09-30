@@ -21,7 +21,6 @@
       "reports/metrics_clean.json",
       "reports/comparison.csv",
       "reports/graph_metrics.csv",
-      "reports/traversal_metrics.csv",
       "reports/final_report.md"
     ]
   },

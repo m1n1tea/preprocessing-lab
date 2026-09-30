@@ -1,0 +1,13 @@
+{
+  "query_id": "f01",
+  "arm": "dirty",
+  "method": "local",
+  "query": "At Azovstal mill 3600, what high-temperature controlled-rolling range is reported? Give °C.",
+  "started_at": "2026-09-30T00:32:10.693022+00:00",
+  "ended_at": "2026-09-30T00:32:25.812682+00:00",
+  "duration_seconds": 15.12,
+  "exit_code": 0,
+  "error": null,
+  "stdout": "The high-temperature controlled-rolling range reported at Azovstal mill 3600 is 730–800°C [Data: Entities (1157); Relationships (1652); Sources (39)].\n",
+  "stderr": ""
+}

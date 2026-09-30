@@ -9,6 +9,7 @@
     "footer_removed": 28,
     "formula_protected": 13,
     "formula_restored": 13,
+    "formula_validation_failures": 13,
     "header_removed": 27,
     "integrity_validated": 1,
     "number_unit_protected": 21,
@@ -26,7 +27,7 @@
   "dehyphenation_repairs": 0,
   "document": "tanaka1981",
   "footers_removed": 28,
-  "formula_validation_failures": 0,
+  "formula_validation_failures": 13,
   "formulas": [
     {
       "canonical": null,
@@ -35,8 +36,8 @@
       "latex": "d ^ { - 1 } \\propto \\sigma _ { \\mathrm { f l o w } } \\propto \\log Z \\quad . \\quad . \\quad . \\quad . \\quad .\\tag{1}",
       "original": "d ^ { - 1 } \\propto \\sigma _ { \\mathrm { f l o w } } \\propto \\log Z \\quad . \\quad . \\quad . \\quad . \\quad .\\tag{1}",
       "page": 5,
-      "sympy_valid": null,
-      "warning": "SymPy validation disabled by configuration"
+      "sympy_valid": false,
+      "warning": "SymPy could not parse the complete formula: LaTeXParsingError"
     },
     {
       "canonical": null,
@@ -45,8 +46,8 @@
       "latex": "Z = \\xi \\exp \\left( Q _ { \\mathrm { d i f f } } / R T \\right) . \\ . \\ . \\ . \\ . \\ .\\tag{2}",
       "original": "Z = \\xi \\exp \\left( Q _ { \\mathrm { d i f f } } / R T \\right) . \\ . \\ . \\ . \\ . \\ .\\tag{2}",
       "page": 5,
-      "sympy_valid": null,
-      "warning": "SymPy validation disabled by configuration"
+      "sympy_valid": false,
+      "warning": "SymPy could not parse the complete formula: LaTeXParsingError"
     },
     {
       "canonical": null,
@@ -55,8 +56,8 @@
       "latex": "d _ { \\mathrm { r e x } } = k \\epsilon ^ { - 0 . 5 } d _ { 0 } Z ^ { - 0 . 0 6 } \\quad . \\quad . \\quad . \\quad .\\tag{3}",
       "original": "d _ { \\mathrm { r e x } } = k \\epsilon ^ { - 0 . 5 } d _ { 0 } Z ^ { - 0 . 0 6 } \\quad . \\quad . \\quad . \\quad .\\tag{3}",
       "page": 6,
-      "sympy_valid": null,
-      "warning": "SymPy validation disabled by configuration"
+      "sympy_valid": false,
+      "warning": "SymPy could not parse the complete formula: LaTeXParsingError"
     },
     {
       "canonical": null,
@@ -65,8 +66,8 @@
       "latex": "\\sigma _ { \\mathrm { ~ f ~ } } ^ { \\mathrm { L } } > \\sigma _ { \\mathrm { L } } \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot\\tag{5}",
       "original": "\\sigma _ { \\mathrm { ~ f ~ } } ^ { \\mathrm { L } } > \\sigma _ { \\mathrm { L } } \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot\\tag{5}",
       "page": 16,
-      "sympy_valid": null,
-      "warning": "SymPy validation disabled by configuration"
+      "sympy_valid": false,
+      "warning": "SymPy could not parse the complete formula: LaTeXParsingError"
     },
     {
       "canonical": null,
@@ -75,8 +76,8 @@
       "latex": "\\sigma _ { \\mathbf { f } } ^ { \\mathtt { Z } } = \\sigma _ { \\mathtt { Z } } \\qquad . \\qquad . \\qquad . \\qquad . \\qquad . \\qquad . \\qquad .\\tag{6}",
       "original": "\\sigma _ { \\mathbf { f } } ^ { \\mathtt { Z } } = \\sigma _ { \\mathtt { Z } } \\qquad . \\qquad . \\qquad . \\qquad . \\qquad . \\qquad . \\qquad .\\tag{6}",
       "page": 16,
-      "sympy_valid": null,
-      "warning": "SymPy validation disabled by configuration"
+      "sympy_valid": false,
+      "warning": "SymPy could not parse the complete formula: LaTeXParsingError"
     },
     {
       "canonical": null,
@@ -85,8 +86,8 @@
       "latex": "\\begin{array} { r } { \\sigma _ { \\mathrm { f } } ^ { \\mathrm { L } } - \\sigma _ { \\mathrm { f } } ^ { \\mathrm { Z } } \\geqslant \\sigma _ { \\mathrm { L } } - \\sigma _ { \\mathrm { Z } } = k ^ { \\prime } \\sigma _ { \\mathrm { y } } \\qquad \\mathrm { ~ . ~ } \\qquad \\mathrm { ~ . ~ } \\qquad . } \\end{array}\\tag{7}",
       "original": "\\begin{array} { r } { \\sigma _ { \\mathrm { f } } ^ { \\mathrm { L } } - \\sigma _ { \\mathrm { f } } ^ { \\mathrm { Z } } \\geqslant \\sigma _ { \\mathrm { L } } - \\sigma _ { \\mathrm { Z } } = k ^ { \\prime } \\sigma _ { \\mathrm { y } } \\qquad \\mathrm { ~ . ~ } \\qquad \\mathrm { ~ . ~ } \\qquad . } \\end{array}\\tag{7}",
       "page": 16,
-      "sympy_valid": null,
-      "warning": "SymPy validation disabled by configuration"
+      "sympy_valid": false,
+      "warning": "SymPy could not parse the complete formula: LaTeXParsingError"
     },
     {
       "canonical": null,
@@ -95,8 +96,8 @@
       "latex": "\\begin{array} { r l } & { \\boldsymbol { \\sigma } _ { \\mathbf { y } } = \\boldsymbol { \\sigma } _ { \\mathbf { 0 } } + k _ { \\mathbf { y } } d ^ { - 1 / 2 } } \\\\ & { \\quad = ( \\boldsymbol { \\sigma } _ { \\mathbf { l h } } + \\boldsymbol { \\sigma } _ { \\mathbf { s h } } + \\boldsymbol { \\sigma } _ { \\mathbf { d h } } + \\boldsymbol { \\sigma } _ { \\mathbf { p h } } ) + k _ { \\mathbf { y } } d ^ { - 1 / 2 }   . } \\end{array}\\tag{8}",
       "original": "\\begin{array} { r l } & { \\boldsymbol { \\sigma } _ { \\mathbf { y } } = \\boldsymbol { \\sigma } _ { \\mathbf { 0 } } + k _ { \\mathbf { y } } d ^ { - 1 / 2 } } \\\\ & { \\quad = ( \\boldsymbol { \\sigma } _ { \\mathbf { l h } } + \\boldsymbol { \\sigma } _ { \\mathbf { s h } } + \\boldsymbol { \\sigma } _ { \\mathbf { d h } } + \\boldsymbol { \\sigma } _ { \\mathbf { p h } } ) + k _ { \\mathbf { y } } d ^ { - 1 / 2 }   . } \\end{array}\\tag{8}",
       "page": 17,
-      "sympy_valid": null,
-      "warning": "SymPy validation disabled by configuration"
+      "sympy_valid": false,
+      "warning": "SymPy could not parse the complete formula: LaTeXParsingError"
     },
     {
       "canonical": null,
@@ -105,8 +106,8 @@
       "latex": "\\begin{array} { r l } { \\sigma _ { \\mathbf { y } } = \\sigma _ { \\mathbf { 0 } } + k _ { \\mathbf { y } } d ^ { - 1 / 2 } + \\sigma _ { \\mathrm { t e x t } } + \\sigma _ { \\mathrm { s u b } } \\mathrm { ~ . ~ } } & { { } \\mathrm { ~ . ~ } } \\end{array}\\tag{9}",
       "original": "\\begin{array} { r l } { \\sigma _ { \\mathbf { y } } = \\sigma _ { \\mathbf { 0 } } + k _ { \\mathbf { y } } d ^ { - 1 / 2 } + \\sigma _ { \\mathrm { t e x t } } + \\sigma _ { \\mathrm { s u b } } \\mathrm { ~ . ~ } } & { { } \\mathrm { ~ . ~ } } \\end{array}\\tag{9}",
       "page": 17,
-      "sympy_valid": null,
-      "warning": "SymPy validation disabled by configuration"
+      "sympy_valid": false,
+      "warning": "SymPy could not parse the complete formula: LaTeXParsingError"
     },
     {
       "canonical": null,
@@ -115,8 +116,8 @@
       "latex": "\\boldsymbol { \\sigma } _ { \\mathbf { y } } = \\boldsymbol { \\sigma } _ { \\mathbf { 0 } } + k d _ { \\mathbf { e } } ^ { - 1 / 2 } \\quad \\mathrm { ~ . ~ } \\quad \\mathrm { ~ . ~ } \\quad \\mathrm { ~ . ~ } \\quad \\mathrm { ~ . ~ } \\quad \\mathrm { ~ . ~ }\\tag{10}",
       "original": "\\boldsymbol { \\sigma } _ { \\mathbf { y } } = \\boldsymbol { \\sigma } _ { \\mathbf { 0 } } + k d _ { \\mathbf { e } } ^ { - 1 / 2 } \\quad \\mathrm { ~ . ~ } \\quad \\mathrm { ~ . ~ } \\quad \\mathrm { ~ . ~ } \\quad \\mathrm { ~ . ~ } \\quad \\mathrm { ~ . ~ }\\tag{10}",
       "page": 17,
-      "sympy_valid": null,
-      "warning": "SymPy validation disabled by configuration"
+      "sympy_valid": false,
+      "warning": "SymPy could not parse the complete formula: LaTeXParsingError"
     },
     {
       "canonical": null,
@@ -125,8 +126,8 @@
       "latex": "\\begin{aligned}\\sigma_{\\mathrm{y}} &= \\sigma_{0} + k_{\\mathrm{y}} d^{-1/2} \\left(1 - f_{\\mathrm{c}}\\right) \\\\& \\quad + k_{\\mathrm{c}} d_{\\mathrm{c}}^{-1/2} f_{\\mathrm{c}} \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot\\end{aligned}\\tag{11}",
       "original": "\\begin{aligned}\\sigma_{\\mathrm{y}} &= \\sigma_{0} + k_{\\mathrm{y}} d^{-1/2} \\left(1 - f_{\\mathrm{c}}\\right) \\\\& \\quad + k_{\\mathrm{c}} d_{\\mathrm{c}}^{-1/2} f_{\\mathrm{c}} \\quad \\cdot \\quad \\cdot \\quad \\cdot \\quad \\cdot\\end{aligned}\\tag{11}",
       "page": 18,
-      "sympy_valid": null,
-      "warning": "SymPy validation disabled by configuration"
+      "sympy_valid": false,
+      "warning": "SymPy could not parse the complete formula: LaTeXParsingError"
     },
     {
       "canonical": null,
@@ -135,8 +136,8 @@
       "latex": "T _ { \\mathrm { \\tiny ~ T S } } = A - B \\log d _ { \\mathrm { \\tiny ~ e ~ } } ^ { - 1 / 2 } \\quad \\mathrm { ~ . ~ . ~ . ~ . ~ . ~ . ~ . ~ }\\tag{12}",
       "original": "T _ { \\mathrm { \\tiny ~ T S } } = A - B \\log d _ { \\mathrm { \\tiny ~ e ~ } } ^ { - 1 / 2 } \\quad \\mathrm { ~ . ~ . ~ . ~ . ~ . ~ . ~ . ~ }\\tag{12}",
       "page": 18,
-      "sympy_valid": null,
-      "warning": "SymPy validation disabled by configuration"
+      "sympy_valid": false,
+      "warning": "SymPy could not parse the complete formula: LaTeXParsingError"
     },
     {
       "canonical": null,
@@ -145,8 +146,8 @@
       "latex": "\\begin{aligned}T_{\\mathrm{TS}}(^{\\circ}\\mathrm{C}) = & -19 + 44(\\%\\mathrm{Si}) + 700(\\%\\mathrm{N}_{\\mathrm{free}})^{1/2} \\\\& + 0.26(\\sigma_{\\mathrm{D}} + \\Delta P + \\Delta) - 11.5d^{-1/2}\\end{aligned}\\tag{13}",
       "original": "\\begin{aligned}T_{\\mathrm{TS}}(^{\\circ}\\mathrm{C}) = & -19 + 44(\\%\\mathrm{Si}) + 700(\\%\\mathrm{N}_{\\mathrm{free}})^{1/2} \\\\& + 0.26(\\sigma_{\\mathrm{D}} + \\Delta P + \\Delta) - 11.5d^{-1/2}\\end{aligned}\\tag{13}",
       "page": 18,
-      "sympy_valid": null,
-      "warning": "SymPy validation disabled by configuration"
+      "sympy_valid": false,
+      "warning": "SymPy could not parse the complete formula: LaTeXParsingError"
     },
     {
       "canonical": null,
@@ -155,8 +156,8 @@
       "latex": "\\begin{array} { r l } { T _ { \\mathrm { r S } } = \\Delta T + A ( \\sigma _ { \\mathrm { p h } } + \\sigma _ { \\mathrm { d h } } + \\Delta ) } & { { } } \\\\ { - B d ^ { - 1 / 2 } ( 1 - f _ { \\mathrm { S } } ) - C d _ { \\mathrm { e } } ^ { - 1 / 2 } f _ { \\mathrm { S } } - E n _ { \\mathrm { S } } } & { { } } \\end{array}\\tag{14}",
       "original": "\\begin{array} { r l } { T _ { \\mathrm { r S } } = \\Delta T + A ( \\sigma _ { \\mathrm { p h } } + \\sigma _ { \\mathrm { d h } } + \\Delta ) } & { { } } \\\\ { - B d ^ { - 1 / 2 } ( 1 - f _ { \\mathrm { S } } ) - C d _ { \\mathrm { e } } ^ { - 1 / 2 } f _ { \\mathrm { S } } - E n _ { \\mathrm { S } } } & { { } } \\end{array}\\tag{14}",
       "page": 18,
-      "sympy_valid": null,
-      "warning": "SymPy validation disabled by configuration"
+      "sympy_valid": false,
+      "warning": "SymPy could not parse the complete formula: LaTeXParsingError"
     }
   ],
   "formulas_protected": 13,

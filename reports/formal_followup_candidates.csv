@@ -1,0 +1,6 @@
+query_id,query_text,source_support,check_focus
+h01,"For the КП+УО+КП route in stat3, give the temperature range before and after intermediate cooling and the finishing-pass counts on each side.","stat3.pdf pp.4,6",Route reconstruction from temperature and pass sequence
+h02,Stat3 changes a roughly 50 mm slab air hold from 300 s to 150–200 s. Calculate the saved time in seconds and percent.,"stat3.pdf pp.3,5",Numerical comparison across two process variants
+h03,Write Tanaka equation (8) for yield stress and name all four contributions to σ₀.,tanaka1981.pdf p.17,Exact formula and term definitions
+h04,"Using the grain-size term in Tanaka equation (8), how does that term change if d falls to d/4? Give the factor.",tanaka1981.pdf p.17,Apply the d^(-1/2) dependence
+h05,"Across stat3 and Tanaka, name one condition that suppresses austenite recrystallization and the resulting new ferrite-nucleation site.","stat3.pdf p.1; tanaka1981.pdf pp.1,5",Cross-document mechanism with two linked facts

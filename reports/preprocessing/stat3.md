@@ -15,6 +15,7 @@
 - `control_codepoints_removed`: 0
 - `formula_protected`: 1
 - `formula_restored`: 1
+- `formula_validation_failures`: 1
 - `hyphenation_repair`: 97
 - `integrity_validated`: 1
 - `invalid_mineru_tables`: 0
@@ -40,7 +41,7 @@
 
 ## Formula checks
 
-- stat3-F001 page 9: SymPy=None; SymPy validation disabled by configuration
+- stat3-F001 page 9: SymPy=False; SymPy could not parse the complete formula: LaTeXParsingError
 
 ## OCR and processing warnings
 

@@ -31,7 +31,7 @@ Camelot lattice is the primary table extractor for CLEAN. MinerU identifies cand
 
 Validated tables run through the relevant CLEAN text stages used for prose: NFC, control and whitespace cleanup, conservative dehyphenation, OCR suspect detection and approved corrections, quantity recognition, date normalization, and abbreviation expansion. Header units provide context for numeric cells, and Pint conversions are appended while source values and notation are retained. Context-sensitive unit aliases are normalized only when the nearby measurement and table structure support that reading; ambiguous symbols are not guessed. Table edits and quantity records are written to the audit. Invalid raw fallback content remains preserved.
 
-Formula text is protected and restored exactly. Optional SymPy LaTeX validation is available with the `formulas` extra and is disabled by default; reports state when validation was not run. Camelot is a required dependency for CLEAN table extraction.
+Formula text is protected and restored exactly. SymPy strict full-string LaTeX validation is enabled in `configs/preprocessing.yaml` and requires `uv sync --extra formulas`. A successful parse confirms only that SymPy accepted the MinerU string; it does not establish that the equation matches the PDF. Camelot is a required dependency for CLEAN table extraction.
 
 ## Outputs and audit
 
@@ -61,4 +61,4 @@ The preprocessing report's `integrity: "passed"` is a stage validation flag,
 not a 0–1 formula or table score. The evaluator computes Formula Integrity and
 Table Integrity by comparing source structures—or the selected CLEAN table
 output—with each arm's final input corpus. See [metrics.md](metrics.md) for these definitions and the
-other graph, gold-label, traversal, and retrieval metrics.
+graph-structure and preservation metrics.

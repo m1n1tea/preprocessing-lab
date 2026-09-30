@@ -12,5 +12,4 @@ paths:
   mineru: data/mineru
   dirty: data/dirty
   clean: data/clean
-  gold: data/gold
   reports: reports

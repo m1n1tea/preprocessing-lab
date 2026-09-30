@@ -1,20 +1,169 @@
 # Metallurgical GraphRAG preprocessing experiment
 
-This repository compares one knowledge graph built from the raw MinerU extraction
-of two metallurgical PDFs with one graph built from cleaned extraction of those
-same PDFs. Both documents will contribute to one graph in each arm. MinerU,
-GraphRAG, models, prompts, and extraction settings must be shared between arms.
+This repository compares two GraphRAG graphs built from the same metallurgical
+papers, `stat3.pdf` and `tanaka1981.pdf`. Each graph contains **both** documents.
+DIRTY uses MinerU Markdown with no semantic cleanup; CLEAN uses MinerU structured
+content and the preprocessing pipeline. Both indexes and their evaluations have
+been produced. The intended experimental difference is preprocessing; the
+GraphRAG models, prompts, entity types, chunking, and extraction settings are
+shared. DIRTY consumes MinerU Markdown while CLEAN consumes structured JSON, so
+the comparison also includes that serialization difference. The figures below
+describe the saved run, not guaranteed results of a new run.
 
-PDF extraction, both corpus preparation stages, paired GraphRAG workspace setup and
-validation, the standard-index command, and graph evaluation are implemented. The
-DIRTY arm currently has an indexed graph; the CLEAN arm has not been indexed yet.
+## What happens to the documents
+
+| Step | DIRTY | CLEAN | Main tools |
+| --- | --- | --- | --- |
+| PDF extraction | MinerU saves Markdown, structured JSON, page/block information, formulas, images, and tables under separate `data/mineru/<document>/` directories. | Same extraction artifacts and settings. | MinerU 4.0.8; `pypdf` validates source PDFs and page counts. |
+| Corpus input | Copies each `markdown.md` byte-for-byte into `data/dirty/input/<document>.txt`. No OCR repair, dehyphenation, header removal, or unit changes. | Reads `structured_content.json` and writes one normalized text file per document in `data/clean/input/`. | Python UTF-8 serialization; `regex`, `ftfy`, Camelot, pandas, Pint, optional SymPy. |
+| Graph construction | Ingests both text files into one DIRTY GraphRAG workspace. | Ingests both text files into one CLEAN GraphRAG workspace. | Microsoft GraphRAG 3.2.0, remote generation API, local vLLM embeddings, LanceDB. |
+| Evaluation | Reads saved Parquet and question results. | Same evaluation procedure. | pandas, NetworkX. |
+
+MinerU uses the Basic tier with automatic OCR, image analysis enabled, and
+all PDF pages. CLEAN then applies these guarded stages in order:
+
+1. Identify MinerU blocks; protect formulas, table content, abbreviations, and number/unit spans. For table candidates, Camelot lattice rereads the PDF page, checks extraction quality, and falls back to MinerU if needed. The accepted cells receive the applicable text cleanup before table serialization.
+2. Normalize Unicode to NFC; accept an `ftfy` repair only if technical-token checks pass. Remove control characters and normalize line endings, whitespace, and blank lines.
+3. Detect recurring headers and footers at page edges, remove standalone page numbers, and keep unique page-edge content.
+4. Join conservative PDF line-break hyphenations while preserving technical symbols and real compound words.
+5. Flag suspicious OCR tokens for review. Automatic correction requires an explicitly reviewed token and context rule; the current correction list is empty.
+6. Recognize numbers and units with Pint, append SI forms while retaining the source numbers and notation, annotate valid dates, and expand configured abbreviations at first use. Table column headings can supply missing unit context.
+7. Restore protected content, preserve the selected table and original formula strings, and validate marker, numeric-token, and output integrity. Optional SymPy checks whether each complete MinerU LaTeX formula parses; parsing is not a check against the printed PDF.
+
+The text is never globally lowercased, stripped of stopwords, or aggressively
+lemmatized. [The pipeline description](docs/preprocessing_pipeline.md) gives
+the exact rules; [the audit JSONL](data/clean/audit/) records each applied text
+change with before/after text and a page/block reference.
+
+### Observed preprocessing changes
+
+Counts below come from the current [stat3](reports/preprocessing/stat3.md) and
+[tanaka1981](reports/preprocessing/tanaka1981.md) preprocessing reports. They
+are stage counts, not independent error counts; recognized quantities can
+outnumber text edits.
+
+| Measure | `stat3` | `tanaka1981` |
+| --- | ---: | ---: |
+| Source PDF pages | 10 | 28 |
+| Characters, structured input → CLEAN output | 21,573 → 22,146 | 99,662 → 98,579 |
+| `hyphenation_repair` | **97** | **0** |
+| Repeated headers / footers removed | 0 / 0 | 27 / 28 |
+| Page numbers removed | 10 | 28 |
+| Whitespace repairs | 5 | 0 |
+| Unit annotations applied | 69 | 16 |
+| OCR suspects flagged / automatic corrections | 1 / 0 | 13 / 0 |
+| Abbreviation expansions | 2 | 0 |
+| Formula blocks protected and restored | 1 | 13 |
+| Accepted Camelot tables | 1 | 0 |
+
+Examples from the current outputs:
+
+| Before | After in CLEAN | Reason |
+| --- | --- | --- |
+| `ох- лаждение` | `охлаждение` | PDF line-break hyphenation repair. |
+| `КП` on first use | `КП [контролируемая прокатка]` | Keep the abbreviation and add its configured meaning. |
+| `20%` | `20% [SI: 0.2]` | Keep the reported value and add a Pint-derived fraction. |
+| Table temperature `1120–1150`, under a Celsius heading | `1120–1150 [SI: 1393.15–1423.15 K]` | Use table-column context; retain the Celsius numbers. |
+| Table heading `0С` | `0С [unit: °C]` | Annotate the recognized Celsius glyph without deleting its source form. |
+
+The accepted `stat3` table has 7 rows and 13 columns. Both corpus inputs
+preserve all 14 MinerU formula blocks and the one evaluated table structure.
+Strict SymPy parsing accepted **0/14** original formula strings; all remain in
+the inputs. A parse rejection may reflect MinerU LaTeX syntax or unsupported
+layout and does not by itself prove a mathematical error.
+
+### External libraries and services
+
+MinerU parses the PDFs; `pypdf` validates them. CLEAN uses `regex` and `ftfy`
+for guarded text repair, Camelot for table extraction, pandas for table and
+Parquet handling, Pint for unit conversions, and optional SymPy for LaTeX
+parsing. Microsoft GraphRAG constructs the graphs; pandas loads its Parquet
+outputs and NetworkX calculates topology and traversal metrics. PyYAML and
+Pydantic load and validate configuration. A remote OpenAI-compatible service
+runs generation; a local vLLM OpenAI-compatible service runs embeddings.
+
+## Graph generation settings
+
+The completed index logs record **`deepseek-v4.1-flash`** for generation and
+**`qwen3-embedding-4b`** (Qwen/Qwen3-Embedding-4B) for embeddings in both
+workspaces. Generation uses the configured remote OpenAI-compatible API;
+embeddings use local vLLM at `http://127.0.0.1:8000/v1` with 2,560-dimensional
+vectors. Credentials and the generation endpoint come from environment
+variables, not the README. The two workspaces share the
+[GraphRAG template](configs/graphrag/settings.template.yaml) and
+[prompts](configs/graphrag/prompts/); only their input/output locations differ.
+
+| Setting | Shared value in the saved indexes |
+| --- | --- |
+| Documents / final text chunks | 2 / 50 DIRTY; 2 / 47 CLEAN |
+| Chunking | 800 tokens, overlap 120, `o200k_base` tokenizer |
+| Graph extraction | One gleaning; claims extraction disabled |
+| Community clustering | Maximum cluster size 10, `use_lcc: false`, seed 42 |
+| Community reports | Maximum length 1,000; maximum input length 8,000 |
+| Vector store / snapshots | LanceDB; GraphML and raw-graph snapshots enabled |
+
+The 16 shared [entity types](configs/graphrag/entity_types.yaml) are
+`PROCESS`, `PROCESS_ROUTE`, `PROCESS_STAGE`, `COOLING_METHOD`, `EQUIPMENT`,
+`STEEL_GRADE`, `ALLOY_FAMILY`, `PRODUCT_FORM`, `CHEMICAL_ELEMENT`,
+`PRECIPITATE`, `PHASE`, `MICROSTRUCTURE`, `PROPERTY`, `PROCESS_CONDITION`,
+`MODEL`, and `FORMULA`.
+
+## Evaluation and question tests
+
+The evaluator makes a **simple undirected** NetworkX graph from
+`entities.parquet` and `relationships.parquet`; duplicate and reverse edges
+collapse. It measures node/edge counts, connected components, largest-component
+ratio, isolates, average degree, density, bridges, articulation points, cycle
+basis count, and average clustering. The current
+[graph metrics](reports/graph_metrics.csv) include:
+
+| Metric | DIRTY | CLEAN |
+| --- | ---: | ---: |
+| Nodes / unique edges | 1,592 / 2,137 | 1,831 / 3,571 |
+| Connected components / isolated nodes | 199 / 172 | 84 / 64 |
+| Largest-component ratio | 82.6% | 93.0% |
+| Average degree / average clustering | 2.68 / 0.068 | 3.90 / 0.221 |
+| Bridges / articulation points | 711 / 379 | 548 / 318 |
+| Cycle basis count | 744 | 1,824 |
+
+Formula and table integrity check preservation into corpus text; they do not
+score extraction into the graph. [Metric definitions](docs/metrics.md) explain
+the topology and preservation measures.
+
+A separate test sent these **ten short, source-checked questions** to both
+graphs in `local` and `global` search modes (40 successful runs). The exact
+prompts, source pages, and responses are in
+[the question CSV](reports/factual_query_questions.csv) and
+[answer comparison](reports/factual_query_comparison.md).
+
+| ID | Concrete question | Source fact to check |
+| --- | --- | --- |
+| f01 | At Azovstal mill 3600, what high-temperature controlled-rolling range is reported? | 730–800 °C |
+| f02 | What accelerated-cooling rate after deformation is reported for thick plate? | 10–30 °C/s |
+| f03 | What maximum rolling-rate increase is reported for high-temperature rolling with accelerated cooling? | Up to 20% |
+| f04 | Under existing low-temperature controlled rolling at mill 3600, how long is the air-cooling hold for a roughly 50 mm slab? | About 300 s |
+| f05 | In the КП+УО+КП route, how many finishing passes occur before and after accelerated cooling? | 5 before, 3 after |
+| f06 | Which controlled-rolling stage uses the non-recrystallization region? | Stage 2 |
+| f07 | What feature divides unrecrystallized austenite grains during controlled rolling? | Deformation bands |
+| f08 | Besides austenite grain boundaries, where does ferrite nucleate in controlled-rolled steel? | Austenite grain interior |
+| f09 | Which element retards austenite recrystallization? | Niobium (Nb) |
+| f10 | What is Eq. (8) for the Hall–Petch yield-stress relation? | `σ_y = σ_0 + k_y d^(-1/2)` |
+
+All four answer sets returned these substantive facts. DIRTY global changed
+the case of `k_y d` to `K_y D` in f10, a formal notation error; the other
+three answers preserved the source symbols. Median query time was 12.65 s for
+local and 28.62 s for global. An earlier six-run
+[benchmark](reports/search_method_benchmark.md) found global faster than
+DRIFT. These results use one response per case and do not establish a
+statistical accuracy difference. More complex questions are drafted in
+[formal_followup_candidates.csv](reports/formal_followup_candidates.csv).
 
 ## Setup on Ubuntu
 
 Install uv if needed, then run:
 
     uv python install 3.12
-    uv sync --locked
+    uv sync --locked --extra formulas
     uv run python -m metallab doctor
 
 MinerU 4.0.8 is pinned in pyproject.toml and uv.lock. The first extraction run
@@ -77,7 +226,7 @@ UTF-8 checked and written deterministically. The stage does not remove headers,
 repair OCR or formulas, join hyphenated words, or normalize abbreviations,
 tables, or units. It logs each document's character and byte count and a total.
 Rerunning with unchanged inputs leaves identical output files in place. The
-the two files are ingested together in one dirty GraphRAG workspace.
+two files are ingested together in one dirty GraphRAG workspace.
 
 The current Tanaka Markdown omits final-page references 138-146 because MinerU
 classified them as headers; the dirty stage intentionally preserves that output
@@ -89,7 +238,7 @@ as-is. Their text remains in MinerU's structured JSON for later analysis.
 
 This validates both MinerU outputs and reads each `structured_content.json` rather
 than the Markdown. It writes `data/clean/input/stat3.txt` and
-`data/clean/input/tanaka1981.txt` for a future shared clean GraphRAG workspace.
+`data/clean/input/tanaka1981.txt` for the shared clean GraphRAG workspace.
 Every run writes `data/clean/reports/<source>.json` and
 `data/clean/audit/<source>.jsonl`. The JSON report records stage counts, table
 and formula validation, quantities, OCR review candidates, and final integrity
@@ -117,8 +266,9 @@ MinerU table and records the reason. Unique MinerU `header` blocks remain,
 including structured content omitted from Markdown.
 
 `uv sync` installs required preprocessing dependencies, including Camelot,
-`ftfy`, `regex`, `pandas`, and `pint`. Optional SymPy formula validation is
-available with `uv sync --extra formulas` and remains disabled by default.
+`ftfy`, `regex`, `pandas`, and `pint`. SymPy formula validation is enabled
+in `configs/preprocessing.yaml` and requires `uv sync --extra formulas`. All
+original strings are retained even when parsing fails.
 
 `configs/preprocessing.yaml` holds the repeated-furniture threshold, the
 abbreviation dictionary, and reviewed OCR corrections. OCR corrections require
@@ -156,8 +306,9 @@ before it starts indexing:
     uv run python -m metallab index --arm dirty
     uv run python -m metallab index --arm clean
 
-Indexing can incur remote API usage and has not been run by setup or validation.
-The indexing CLI rejects configuration drift before launching GraphRAG. Use the
+Indexing can incur remote API usage. Both saved workspaces have been indexed;
+these commands rerun an arm. The indexing CLI rejects configuration drift
+before launching GraphRAG. Use the
 same remote generation service and local vLLM service for both arm runs.
 
 ## Other CLI commands
@@ -167,12 +318,11 @@ same remote generation service and local vLLM service for both arm runs.
     uv run metallab evaluate --arm clean
     uv run metallab compare
 
-Evaluation reads saved GraphRAG Parquet outputs and reviewed files under
-`data/gold/`; it does not call model APIs. It writes per-arm JSON and GraphML,
-then paired CSV and Markdown reports after both arms have been evaluated. See
-[docs/metrics.md](docs/metrics.md) for metric definitions and gold CSV schemas.
-Gold-dependent scores remain null until reviewed annotations exist. Keep
-credentials only in the ignored `.env` or exported environment variables.
+Evaluation reads saved GraphRAG Parquet outputs without calling model APIs.
+It writes per-arm JSON and GraphML, then paired CSV and Markdown reports after
+both arms have been evaluated. See [docs/metrics.md](docs/metrics.md) for the
+documented topology and preservation metrics. Keep credentials only in the
+ignored `.env` or exported environment variables.
 
 ## Checks
 

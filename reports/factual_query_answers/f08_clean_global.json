@@ -1,0 +1,13 @@
+{
+  "query_id": "f08",
+  "arm": "clean",
+  "method": "global",
+  "query": "Besides austenite grain boundaries, where does ferrite nucleate in controlled-rolled steel? Name the site.",
+  "started_at": "2026-09-30T01:04:47.665976+00:00",
+  "ended_at": "2026-09-30T01:05:15.161725+00:00",
+  "duration_seconds": 27.5,
+  "exit_code": 0,
+  "error": null,
+  "stdout": "Ferrite (α) also nucleates at deformation bands and in grain interiors in controlled-rolled steel [Data: Reports (116, 363, 167, 365, 21, +more)].\n",
+  "stderr": ""
+}

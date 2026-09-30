@@ -1,0 +1,13 @@
+{
+  "query_id": "f10",
+  "arm": "clean",
+  "method": "local",
+  "query": "What is Tanaka’s Hall–Petch yield-stress relation? Give the equation only.",
+  "started_at": "2026-09-30T00:34:05.597228+00:00",
+  "ended_at": "2026-09-30T00:34:18.852851+00:00",
+  "duration_seconds": 13.26,
+  "exit_code": 0,
+  "error": null,
+  "stdout": "Not found.\n",
+  "stderr": ""
+}

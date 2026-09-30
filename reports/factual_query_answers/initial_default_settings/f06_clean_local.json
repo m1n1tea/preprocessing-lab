@@ -1,0 +1,13 @@
+{
+  "query_id": "f06",
+  "arm": "clean",
+  "method": "local",
+  "query": "Which stage of Tanaka’s controlled-rolling scheme uses the non-recrystallization region? Give the stage number.",
+  "started_at": "2026-09-30T00:33:14.686795+00:00",
+  "ended_at": "2026-09-30T00:33:26.562351+00:00",
+  "duration_seconds": 11.88,
+  "exit_code": 0,
+  "error": null,
+  "stdout": "Tanaka's controlled-rolling stage 2 is deformation in the non-recrystallization region [Data: Entities (295, 16, 13); Relationships (479, 2421); Sources (4)].\n",
+  "stderr": ""
+}

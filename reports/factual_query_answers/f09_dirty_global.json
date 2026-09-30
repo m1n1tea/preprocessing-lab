@@ -1,0 +1,13 @@
+{
+  "query_id": "f09",
+  "arm": "dirty",
+  "method": "global",
+  "query": "Which element retards austenite recrystallization? Give its name.",
+  "started_at": "2026-09-30T01:08:20.548199+00:00",
+  "ended_at": "2026-09-30T01:08:58.973505+00:00",
+  "duration_seconds": 38.43,
+  "exit_code": 0,
+  "error": null,
+  "stdout": "Niobium (Nb) is the element that retards austenite recrystallization [Data: Reports (348, 136, 17, 127, 135, +more)].\n",
+  "stderr": ""
+}
